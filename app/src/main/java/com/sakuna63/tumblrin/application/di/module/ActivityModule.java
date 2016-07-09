@@ -29,5 +29,4 @@ public class ActivityModule {
     LayoutInflater layoutInflater() {
         return activity.getLayoutInflater();
     }
-
 }

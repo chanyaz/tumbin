@@ -6,6 +6,8 @@ android {
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
 
+    dataBinding.enabled = true
+
     defaultConfig {
         applicationId "com.sakuna63.tumblrin"
         minSdkVersion 17
@@ -14,12 +16,26 @@ android {
         versionName "1.0"
     }
     buildTypes {
+        all {
+            buildConfigField "String", "CONSUMER_KEY", "\"${CONSUMER_KEY}\""
+            buildConfigField "String", "CONSUMER_KEY_SECRET", "\"${CONSUMER_KEY_SECRET}\""
+        }
+        debug {
+            applicationIdSuffix ".debug"
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+        develop {
+            minSdkVersion 21
+        }
+    }
 }
+
+def dartVersion = '2.0.+'
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -27,11 +43,22 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:24.0.0'
     compile 'com.android.support:design:24.0.0'
     compile 'com.android.support:support-annotations:24.0.0'
+    compile 'com.android.support:customtabs:24.0.0'
+
     compile 'io.reactivex:rxjava:1.1.6'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.trello:rxlifecycle:0.6.1'
     compile 'com.trello:rxlifecycle-components:0.6.1'
+
     compile 'com.tumblr:jumblr:0.0.11'
+
+    compile "com.f2prateek.dart:dart:${dartVersion}"
+    apt "com.f2prateek.dart:dart-processor:${dartVersion}"
+    compile "com.f2prateek.dart:henson:${dartVersion}"
+    apt "com.f2prateek.dart:henson-processor:${dartVersion}"
+
+    compile 'com.rejasupotaro:kvs-schema:5.0.1'
+    apt 'com.rejasupotaro:kvs-schema-compiler:5.0.1'
 
     compile 'com.google.dagger:dagger:2.5'
     apt 'com.google.dagger:dagger-compiler:2.5'
