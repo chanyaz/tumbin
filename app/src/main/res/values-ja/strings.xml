@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_reload">再取得</string>
+    <string name="action_refresh">更新</string>
+    <string name="action_login">ログイン</string>
+
+    <string name="label_post_source_fmt">出典: %1$s</string>
+
+    <string name="msg_fetch_authorization_url">認証用URLを取得しています…</string>
+    <string name="msg_fetch_authorization_token">トークンを取得しています…</string>
+    <string name="msg_post_not_found">ポストが見つかりませんでした。</string>
+    <string name="msg_fail_fetching_posts">ポストの取得に失敗しました。</string>
+</resources>

@@ -1,0 +1,50 @@
+package com.sakuna63.tumbin.application.misc;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import com.sakuna63.tumbin.application.preferences.TokenPrefs;
+import com.sakuna63.tumbin.data.model.Token;
+
+import javax.inject.Inject;
+
+public class AccountManager {
+
+    @NonNull
+    private final Context context;
+
+    @Inject
+    public AccountManager(@NonNull Context context) {
+        this.context = context;
+    }
+
+    public boolean isLoggedIn() {
+        return getToken() != null;
+    }
+
+    @Nullable
+    public Token getToken() {
+        TokenPrefs prefs = TokenPrefs.get(context);
+        if (!prefs.hasToken() || !prefs.hasTokenSecret()) {
+            return null;
+        }
+
+        return new Token(
+                prefs.getToken(),
+                prefs.getTokenSecret()
+        );
+    }
+
+    public void saveToken(@NonNull Token token) {
+        TokenPrefs prefs = TokenPrefs.get(context);
+        prefs.putToken(token.getToken());
+        prefs.putTokenSecret(token.getTokenSecret());
+    }
+
+    public void removeToken() {
+        TokenPrefs tokenPrefs = TokenPrefs.get(context);
+        tokenPrefs.removeToken();
+        tokenPrefs.removeTokenSecret();
+    }
+}
