@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" tools:ignore="MissingTranslation">Tumbin</string>
+
+    <string name="title_home" tools:ignore="MissingTranslation">Dashboard</string>
+
+    <string name="action_reload">Reload</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_login">Login</string>
+
+    <string name="label_post_source_fmt">source: %1$s</string>
+
+    <string name="msg_fetch_authorization_url">Fetching authorization url…</string>
+    <string name="msg_fetch_authorization_token">Fetching authorization token…</string>
+    <string name="msg_post_not_found">Post not found</string>
+    <string name="msg_fail_fetching_posts">Fail fetching posts</string>
+</resources>

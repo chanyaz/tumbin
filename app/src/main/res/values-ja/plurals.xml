@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <plurals name="label_post_notes_fmt" tools:ignore="UnusedQuantity">
+        <item quantity="one">%1$d ノート</item>
+        <item quantity="other">%1$d ノート</item>
+    </plurals>
+</resources>

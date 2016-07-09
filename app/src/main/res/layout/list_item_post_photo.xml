@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="post"
+            type="com.sakuna63.tumbin.application.adapter.PostAdapter.PhotoPostViewModel" />
+
+        <variable
+            name="index"
+            type="java.lang.Integer" />
+
+        <import type="com.sakuna63.tumbin.application.contract.presenter.posts.PlaceHolderDrawable" />
+    </data>
+
+    <com.sakuna63.tumbin.application.widget.BadgedSquareImageView
+        android:id="@+id/image_post_photo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        app:badgeGravity="bottom|end"
+        app:badgePadding="16dp"
+        app:badgeTexts="@{post.badgeTexts}"
+        app:placeHolder="@{PlaceHolderDrawable.newInstance(context, index)}"
+        app:srcUrl="@{post.thumbnailUrl}" />
+</layout>

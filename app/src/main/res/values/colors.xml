@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#36465D</color>
+    <color name="colorPrimaryDark">#222F3F</color>
+    <color name="colorAccent">#529ecc</color>
+    <array name="post_loading_placeholders">
+        <item>#ff191919</item>
+        <item>#ff212121</item>
+        <item>#ff232323</item>
+    </array>
+</resources>
