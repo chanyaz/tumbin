@@ -5,8 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.sakuna63.tumblrin.application.preferences.TokenPrefs;
-
-import org.scribe.model.Token;
+import com.sakuna63.tumblrin.data.model.Token;
 
 import javax.inject.Inject;
 
@@ -20,7 +19,7 @@ public class AccountManager {
         this.context = context;
     }
 
-    public boolean isLogined() {
+    public boolean isLoggedIn() {
         return getToken() != null;
     }
 
@@ -40,7 +39,7 @@ public class AccountManager {
     public void saveToken(@NonNull Token token) {
         TokenPrefs prefs = TokenPrefs.get(context);
         prefs.putToken(token.getToken());
-        prefs.putToken(token.getSecret());
+        prefs.putTokenSecret(token.getTokenSecret());
     }
 
     public void removeToken() {

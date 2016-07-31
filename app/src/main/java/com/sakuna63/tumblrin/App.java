@@ -7,6 +7,8 @@ import com.sakuna63.tumblrin.application.di.component.ApplicationComponent;
 import com.sakuna63.tumblrin.application.di.component.DaggerApplicationComponent;
 import com.sakuna63.tumblrin.application.di.module.ApplicationModule;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 public class App extends Application {
 
     private ApplicationComponent appComponent;
@@ -15,6 +17,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
+        JodaTimeAndroid.init(this);
         initAppComponent();
     }
 

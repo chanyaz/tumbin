@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Tumblrin</string>
+    <string name="action_reload">再取得</string>
 </resources>

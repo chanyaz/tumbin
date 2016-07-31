@@ -1,7 +1,6 @@
 package com.sakuna63.tumblrin.application.contract.presenter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -9,9 +8,8 @@ import com.sakuna63.tumblrin.application.contract.LoginContract;
 import com.sakuna63.tumblrin.application.contract.presenter.login.OauthHelper;
 import com.sakuna63.tumblrin.application.di.scope.ActivityScope;
 import com.sakuna63.tumblrin.application.misc.AccountManager;
+import com.sakuna63.tumblrin.data.model.Token;
 import com.trello.rxlifecycle.LifecycleTransformer;
-
-import org.scribe.model.Token;
 
 import javax.inject.Inject;
 
@@ -34,17 +32,20 @@ public class LoginPresenter implements LoginContract.Presenter {
     @NonNull
     private final AccountManager accountManager;
 
-    private LifecycleTransformer transformer;
+    @NonNull
+    private final LifecycleTransformer transformer;
 
     @Inject
     public LoginPresenter(@NonNull Context context,
                           @NonNull LoginContract.View view,
                           @NonNull OauthHelper oauthHelper,
-                          @NonNull AccountManager accountManager) {
+                          @NonNull AccountManager accountManager,
+                          @NonNull LifecycleTransformer transformer) {
         this.context = context;
         this.view = view;
         this.oauthHelper = oauthHelper;
         this.accountManager = accountManager;
+        this.transformer = transformer;
     }
 
     @Inject
@@ -53,9 +54,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     }
 
     @Override
-    public void init(@NonNull LifecycleTransformer transformer) {
-        this.transformer = transformer;
-
+    public void init() {
         view.setLoginButtonActive(true);
         view.setLoginProgress(false);
         view.showErrorMessage("");
@@ -73,7 +72,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     public void onLoginCallback(String dataString) {
         Log.d("LoginPresenter", dataString);
         // tumblrin://authorize?oauth_token=WYXFqUqMRPi1v397EL7YJ7v0ZpoJSaCCAeQ57AvnxdIMHzrsIp&oauth_verifier=shP0lslZlcbD0CENHoY9hwKoJt8p0swuegsqAcIiW53mylshUS#_=_
-        String verifier = oauthHelper.extractVerifier(dataString);
+        String verifier = OauthHelper.extractVerifier(dataString);
         //noinspection unchecked
         oauthHelper.getAccessToken(verifier)
                 .compose(transformer.forSingle())

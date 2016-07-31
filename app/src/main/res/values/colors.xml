@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3e136b</color>
     <color name="colorPrimaryDark">#000138</color>
     <color name="colorAccent">#6965a5</color>
+    <array name="post_loading_placeholders">
+        <item>#ff191919</item>
+        <item>#ff212121</item>
+        <item>#ff232323</item>
+    </array>
 </resources>

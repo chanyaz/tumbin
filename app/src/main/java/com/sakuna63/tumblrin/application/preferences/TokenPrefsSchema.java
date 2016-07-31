@@ -5,6 +5,8 @@ import com.rejasupotaro.android.kvs.annotations.Table;
 
 @Table(name = "token")
 public class TokenPrefsSchema {
-    @Key(name = "token") String token;
-    @Key(name = "token_secret") String tokenSecret;
+    @Key(name = "token")
+    String token;
+    @Key(name = "token_secret")
+    String tokenSecret;
 }
