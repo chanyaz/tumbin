@@ -14,6 +14,8 @@ public interface PostContract {
     }
 
     interface Presenter extends BasePresenter {
-        void setActivePage(boolean activePage);
+        void onLikeClick();
+
+        void onReblogClick();
     }
 }

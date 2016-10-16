@@ -43,11 +43,12 @@ public class PostPresenter implements PostContract.Presenter {
     }
 
     @Override
-    public void setActivePage(boolean activePage) {
-        if (activePage) {
-            view.startAnimationGif();
-        } else {
-            view.stopAnimationGif();
-        }
+    public void onReblogClick() {
+
+    }
+
+    @Override
+    public void onLikeClick() {
+
     }
 }
