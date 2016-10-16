@@ -9,13 +9,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PostsResponse {
     private Blog blog;
-    private List<Post> posts;
 
     public Blog getBlog() {
         return blog;
-    }
-
-    public List<Post> getPosts() {
-        return posts;
     }
 }

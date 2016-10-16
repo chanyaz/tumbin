@@ -2,6 +2,7 @@ package com.sakuna63.tumbin.data.api;
 
 import android.support.annotation.IntRange;
 
+import com.sakuna63.tumbin.data.model.response.BlogResponse;
 import com.sakuna63.tumbin.data.model.response.PostsResponse;
 import com.sakuna63.tumbin.data.model.response.TumblrResponse;
 
@@ -24,7 +25,7 @@ public interface TumblrService {
     );
 
     @GET("/v2/blog/{blog-identifier}")
-    Single<PostsResponse> getPosts(
+    Single<TumblrResponse<PostsResponse>> getPosts(
             @Path("blog-identifier") String blogIdentifier,
             @Query("id") Long id,
             @Query("tag") String tag,
@@ -34,4 +35,10 @@ public interface TumblrService {
             @Query("notes_info") Boolean notesInfo,
             @Query("filter") String filter
     );
+
+    @GET("/v2/blog/{blog_identifier}/info")
+    Single<TumblrResponse<BlogResponse>> getPosts(
+            @Path("blog-identifier") String blogIdentifier,
+            @Query("is_full_blog_info") boolean isFullBlogInfo);
+
 }
