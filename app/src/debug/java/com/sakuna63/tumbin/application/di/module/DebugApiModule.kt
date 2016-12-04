@@ -8,11 +8,19 @@ import okhttp3.logging.HttpLoggingInterceptor
 class DebugApiModule : ApiModule() {
 
     override fun okHttpClient(consumer: OAuthConsumer): OkHttpClient {
-        val client = super.okHttpClient(consumer)
-        return client.newBuilder()
+        val builder = super.okHttpClient(consumer).newBuilder()
+        return addDebugInterceptors(builder).build()
+    }
+
+    override fun unsafeOkHttpClient(): OkHttpClient {
+        val builder = super.unsafeOkHttpClient().newBuilder()
+        return addDebugInterceptors(builder).build()
+    }
+
+    private fun addDebugInterceptors(builder: OkHttpClient.Builder): OkHttpClient.Builder {
+        return builder
                 .addNetworkInterceptor(StethoInterceptor())
                 .addNetworkInterceptor(buildHttpLoggingInterceptor())
-                .build()
     }
 
     private fun buildHttpLoggingInterceptor() =

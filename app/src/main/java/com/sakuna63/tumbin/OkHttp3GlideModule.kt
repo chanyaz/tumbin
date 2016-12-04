@@ -22,7 +22,7 @@ class OkHttp3GlideModule : GlideModule {
 
     private fun getClient(context: Context): OkHttpClient {
         val app = context.applicationContext as App
-        return app.appComponent.okHttpClient()
+        return app.appComponent.unsafeOkHttpClient()
     }
 
 }
