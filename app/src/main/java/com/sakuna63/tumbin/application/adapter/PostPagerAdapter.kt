@@ -1,49 +1,36 @@
 package com.sakuna63.tumbin.application.adapter
 
+import com.sakuna63.tumbin.R
 import android.content.Context
+import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
 import android.view.ViewGroup
-import com.sakuna63.tumbin.R
-import com.sakuna63.tumbin.application.fragment.DashboardPostFragmentBuilder
 import com.sakuna63.tumbin.data.model.Post
-import com.sakuna63.tumbin.fillUntil
+import com.sakuna63.tumbin.application.fragment.DashboardPostFragmentBuilder
 
-class PostPagerAdapter(fm: FragmentManager, private val context: Context,
+class PostPagerAdapter(private val fm: FragmentManager,
+                       private val context: Context,
                        private val posts: List<Post>) : FragmentPagerAdapter(fm) {
-    private val fragments: MutableList<Fragment?> = mutableListOf()
 
-    override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val fragment = super.instantiateItem(container, position) as Fragment
-        if (!needVisibilityPropagation(container, position)) {
-            return fragment
-        }
+    var containerId: Int? = null
 
-        fragments.fillUntil(position)
-        fragments[position] = fragment
-
-        val viewPager = container as ViewPager
-        if (position == viewPager.currentItem + 1) {
-            setVisibility(fragment, true)
-        }
-
-        return fragment
+    override fun startUpdate(container: ViewGroup?) {
+        super.startUpdate(container)
+        containerId = container?.id
     }
 
     override fun setPrimaryItem(container: ViewGroup, position: Int, `object`: Any) {
         super.setPrimaryItem(container, position, `object`)
-        if (!needVisibilityPropagation(container, position)) {
-            return
-        }
 
-        if (position + 1 < fragments.size) {
-            setVisibility(fragments[position + 1]!!, true)
+        var pos = position
+        var pageWidth = getPageWidth(position)
+        while (pageWidth < 1.0f) {
+            setFragmentVisibility(++pos, true)
+            pageWidth += getPageWidth(pos)
         }
-        if (position + 2 < fragments.size) {
-            setVisibility(fragments[position + 2]!!, false)
-        }
+        setFragmentVisibility(++pos, false)
     }
 
     override fun getItem(position: Int): Fragment {
@@ -56,11 +43,13 @@ class PostPagerAdapter(fm: FragmentManager, private val context: Context,
     override fun getPageWidth(position: Int): Float =
             1.0f / context.resources.getInteger(R.integer.num_post_pages_same_time)
 
-    private fun needVisibilityPropagation(container: ViewGroup, position: Int): Boolean =
-            container is ViewPager && getPageWidth(position) != 1.0f
+    private fun setFragmentVisibility(position: Int, visible: Boolean) {
+        val fragment: Fragment? = fm.findFragmentByTag(makeFragmentName(containerId!!, position))
+        fragment?.setMenuVisibility(visible)
+        fragment?.userVisibleHint = visible
+    }
 
-    private fun setVisibility(fragment: Fragment, visible: Boolean) {
-        fragment.setMenuVisibility(visible)
-        fragment.userVisibleHint = visible
+    private fun makeFragmentName(@LayoutRes viewId: Int, position: Int): String {
+        return "android:switcher:$viewId:$position"
     }
 }

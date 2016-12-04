@@ -7,12 +7,6 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 
-fun <E : Any> MutableList<E?>.fillUntil(position: Int) {
-    while (this.size <= position) {
-        this.add(null)
-    }
-}
-
 @Suppress("UNCHECKED_CAST")
 fun <E : View> Activity.bindView(@IdRes resId: Int): Lazy<E> = lazy {
     this.findViewById(resId) as E
