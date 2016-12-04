@@ -1,35 +1,20 @@
 package com.sakuna63.tumbin.application.di.module
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
-import com.sakuna63.tumbin.application.di.qualifier.NetworkInterceptor
-import dagger.Module
-import dagger.Provides
-import dagger.multibindings.IntoSet
-import okhttp3.Interceptor
+import oauth.signpost.OAuthConsumer
+import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import javax.inject.Singleton
 
-@Module
 class DebugApiModule : ApiModule() {
 
-//    @Provides
-//    @Singleton
-//    override fun okHttpClient(consumer: OAuthConsumer): OkHttpClient =
-//            super.okHttpClient(consumer).newBuilder()
-//                    .addNetworkInterceptor(httpLoggingInterceptor())
-//                    .addNetworkInterceptor(stethoInterceptor())
-//                    .build()
+    override fun okHttpClient(consumer: OAuthConsumer): OkHttpClient {
+        val client = super.okHttpClient(consumer)
+        return client.newBuilder()
+                .addNetworkInterceptor(StethoInterceptor())
+                .addNetworkInterceptor(buildHttpLoggingInterceptor())
+                .build()
+    }
 
-    @Provides
-    @Singleton
-    @NetworkInterceptor
-    @IntoSet
-    fun httpLoggingInterceptor(): Interceptor =
+    private fun buildHttpLoggingInterceptor() =
             HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-
-    @Provides
-    @Singleton
-    @NetworkInterceptor
-    @IntoSet
-    fun stethoInterceptor(): Interceptor = StethoInterceptor()
 }

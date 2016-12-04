@@ -3,9 +3,11 @@ package com.sakuna63.tumbin.application.di.module
 import android.annotation.SuppressLint
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategy
+import com.sakuna63.tumbin.application.di.qualifier.NetworkInterceptor
 import com.sakuna63.tumbin.data.api.TumblrService
 import dagger.Module
 import dagger.Provides
+import dagger.multibindings.ElementsIntoSet
 import dagger.multibindings.IntoSet
 import oauth.signpost.OAuthConsumer
 import okhttp3.Interceptor
@@ -18,7 +20,7 @@ import se.akerfeldt.okhttp.signpost.SigningInterceptor
 import java.text.SimpleDateFormat
 import javax.inject.Singleton
 
-@Module
+@Module(includes = arrayOf(AuthenticationModule::class))
 open class ApiModule {
 
     @Provides
@@ -84,11 +86,11 @@ open class ApiModule {
     fun signingInterceptor(consumer: OAuthConsumer): Interceptor =
             SigningInterceptor(consumer as OkHttpOAuthConsumer)
 
-//    @Provides
-//    @NetworkInterceptor
-//    @ElementsIntoSet
-//    @Singleton
-//    fun dummyInterceptor(): Set<Interceptor> = emptySet()
+    @Provides
+    @NetworkInterceptor
+    @ElementsIntoSet
+    @Singleton
+    fun dummyInterceptor(): Set<Interceptor> = emptySet()
 
     @SuppressLint("SimpleDateFormat")
     @Provides
