@@ -14,7 +14,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = arrayOf(ApplicationModule::class, ApiModule::class))
 interface ApplicationComponent {
-    fun okhttpClient(): OkHttpClient
+    fun okHttpClient(): OkHttpClient
 
     fun accountManger(): AccountManager
 
