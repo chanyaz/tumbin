@@ -2,8 +2,8 @@ package com.sakuna63.tumbin.application.di.module
 
 import com.sakuna63.tumbin.application.contract.PostContract
 import com.sakuna63.tumbin.application.di.scope.FragmentScope
-import com.sakuna63.tumbin.data.datasource.PostsDataSource
-import com.sakuna63.tumbin.data.repository.PostsRepository
+import com.sakuna63.tumbin.data.datasource.PostDataSource
+import com.sakuna63.tumbin.data.repository.PostRepository
 
 import dagger.Module
 import dagger.Provides
@@ -21,5 +21,5 @@ class PostPresenterModule(private val view: PostContract.View, private val postI
 
     @Provides
     @FragmentScope
-    fun postsDataSource(postsRepository: PostsRepository): PostsDataSource = postsRepository
+    fun postsDataSource(postsRepository: PostRepository): PostDataSource = postsRepository
 }

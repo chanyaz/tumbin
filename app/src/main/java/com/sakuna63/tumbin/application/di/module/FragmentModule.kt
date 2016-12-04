@@ -11,7 +11,7 @@ import com.trello.rxlifecycle.components.support.RxFragment
 import dagger.Module
 import dagger.Provides
 
-@Module
+@Module(includes = arrayOf(DaoModule::class))
 class FragmentModule(private val fragment: RxFragment) {
 
     @Provides

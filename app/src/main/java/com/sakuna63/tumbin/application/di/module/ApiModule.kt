@@ -142,7 +142,7 @@ open class ApiModule {
     }
 
     companion object {
-        private val BASE_URL = "https://api.tumblr.com"
+        const val BASE_URL = "https://api.tumblr.com"
         const val NAME_UNSAFE_CLIENT = "ApiModule.NAME_UNSAFE_CLIENT"
     }
 }

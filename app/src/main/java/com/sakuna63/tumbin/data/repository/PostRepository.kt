@@ -3,15 +3,15 @@ package com.sakuna63.tumbin.data.repository
 import android.support.annotation.IntRange
 import com.sakuna63.tumbin.data.api.TumblrService
 import com.sakuna63.tumbin.data.dao.DashboardRealmDao
-import com.sakuna63.tumbin.data.datasource.PostsDataSource
+import com.sakuna63.tumbin.data.datasource.PostDataSource
 import rx.Completable
 import rx.Single
 import javax.inject.Inject
 
-class PostsRepository
+class PostRepository
 @Inject
 constructor(private val service: TumblrService,
-            private val dashboardRealmDao: DashboardRealmDao) : PostsDataSource {
+            private val dashboardRealmDao: DashboardRealmDao) : PostDataSource {
 
     override fun fetchDashboard(@IntRange(from = 1, to = 20) limit: Int?,
                                 @IntRange(from = 0) offset: Int?,

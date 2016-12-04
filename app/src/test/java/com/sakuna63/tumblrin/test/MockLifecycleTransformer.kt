@@ -3,22 +3,19 @@ package com.sakuna63.tumblrin.test
 import com.trello.rxlifecycle.LifecycleTransformer
 
 import rx.Completable
+import rx.Observable
 import rx.Single
 
-class MockLifecycleTransformer : LifecycleTransformer<*> {
-    override fun forSingle(): Single.Transformer<*, *> {
-        return object : Single.Transformer {
-            override fun call(o: Any): Any {
-                return o
-            }
-        }
+class MockLifecycleTransformer : LifecycleTransformer<Any?> {
+    override fun call(t: Observable<Any?>): Observable<Any?> {
+        return t
+    }
+
+    override fun <U : Any?> forSingle(): Single.Transformer<U, U> {
+        return Single.Transformer { t -> t }
     }
 
     override fun forCompletable(): Completable.Transformer {
-        return Completable.Transformer { completable -> completable }
-    }
-
-    override fun call(o: Any): Any {
-        return o
+        return Completable.Transformer { t -> t }
     }
 }

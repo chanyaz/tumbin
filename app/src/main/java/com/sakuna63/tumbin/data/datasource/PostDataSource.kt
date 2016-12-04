@@ -5,7 +5,7 @@ import android.support.annotation.IntRange
 import rx.Completable
 import rx.Single
 
-interface PostsDataSource {
+interface PostDataSource {
     fun fetchDashboard(@IntRange(from = 1, to = 20) limit: Int?,
                        @IntRange(from = 0) offset: Int?,
                        sinceId: Long?,

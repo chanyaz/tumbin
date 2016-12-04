@@ -4,7 +4,7 @@ import com.sakuna63.tumbin.application.contract.PostsContract
 import com.sakuna63.tumbin.application.di.scope.ActivityScope
 import com.sakuna63.tumbin.data.dao.DashboardRealmDao
 import com.sakuna63.tumbin.data.dao.RealmResultsWrapper
-import com.sakuna63.tumbin.data.datasource.PostsDataSource
+import com.sakuna63.tumbin.data.datasource.PostDataSource
 import com.sakuna63.tumbin.data.model.Post
 import com.sakuna63.tumbin.log
 import com.trello.rxlifecycle.LifecycleTransformer
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class DashboardPresenter
 @Inject
 constructor(private val view: PostsContract.View,
-            private val dataSource: PostsDataSource,
+            private val dataSource: PostDataSource,
             private val dashboardRealmDao: DashboardRealmDao,
             private val transformer: LifecycleTransformer<Any>) : PostsContract.Presenter {
 

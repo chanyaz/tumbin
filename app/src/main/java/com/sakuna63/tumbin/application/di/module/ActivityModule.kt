@@ -11,7 +11,7 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity
 import dagger.Module
 import dagger.Provides
 
-@Module
+@Module(includes = arrayOf(DaoModule::class))
 class ActivityModule(private val activity: RxAppCompatActivity) {
 
     @Provides

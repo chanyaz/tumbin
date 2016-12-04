@@ -7,7 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import rx.Single
 
-interface TumblrService {
+open interface TumblrService {
 
     @GET("/v2/user/dashboard")
     fun getDashboard(

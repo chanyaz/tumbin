@@ -2,8 +2,8 @@ package com.sakuna63.tumbin.application.di.module
 
 import com.sakuna63.tumbin.application.contract.PostsContract
 import com.sakuna63.tumbin.application.di.scope.ActivityScope
-import com.sakuna63.tumbin.data.datasource.PostsDataSource
-import com.sakuna63.tumbin.data.repository.PostsRepository
+import com.sakuna63.tumbin.data.datasource.PostDataSource
+import com.sakuna63.tumbin.data.repository.PostRepository
 
 import dagger.Module
 import dagger.Provides
@@ -16,5 +16,5 @@ class PostsPresenterModule(private val view: PostsContract.View) {
 
     @Provides
     @ActivityScope
-    fun postsDataSource(postsRepository: PostsRepository): PostsDataSource = postsRepository
+    fun postsDataSource(postsRepository: PostRepository): PostDataSource = postsRepository
 }
