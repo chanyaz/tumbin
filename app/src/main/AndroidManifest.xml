@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.sakuna63.tumbin">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -15,7 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.sakuna63.tumbin.application.activity.HomeActivity"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,7 +26,7 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:exported="false"
             android:launchMode="singleTask"
-            tools:ignore="GoogleAppIndexingUrlError">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -43,6 +42,9 @@
         <activity
             android:name="com.sakuna63.tumbin.application.activity.DashboardPostActivity"
             android:exported="false" />
-    </application>
 
+        <meta-data
+            android:name="com.sakuna63.tumbin.OkHttp3GlideModule"
+            android:value="GlideModule" />
+    </application>
 </manifest>
