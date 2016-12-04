@@ -1,4 +1,4 @@
-package com.sakuna63.tumblrin.test.rule
+package com.sakuna63.tumbin.test.rule
 
 import org.junit.rules.TestRule
 import org.junit.runner.Description

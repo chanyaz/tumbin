@@ -1,4 +1,4 @@
-package com.sakuna63.tumblrin.test
+package com.sakuna63.tumbin.test
 
 import com.trello.rxlifecycle.LifecycleTransformer
 

@@ -1,15 +1,18 @@
 package com.sakuna63.tumbin.application.contract.presenter.login
 
-import android.support.test.filters.SmallTest
-import android.support.test.runner.AndroidJUnit4
+import com.sakuna63.tumbin.BuildConfig
+import com.sakuna63.tumbin.test.TestApp
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
-@RunWith(AndroidJUnit4::class)
-@SmallTest
-class OauthHelperTestAndroid {
+
+@RunWith(RobolectricTestRunner::class)
+@Config(constants = BuildConfig::class, sdk = intArrayOf(23), application = TestApp::class)
+class OauthHelperTest {
 
     @Test
     @Throws(Throwable::class)
