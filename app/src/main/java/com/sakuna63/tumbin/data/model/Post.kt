@@ -57,6 +57,8 @@ open class Post : RealmObject() {
     var sourceUrl: String? = null
     var sourceTitle: String? = null
     var noteCount: Int = 0
+    lateinit var title: String
+    lateinit var body: String
     lateinit var caption: String
     lateinit var reblog: Reblog
     @JsonProperty("trail")
