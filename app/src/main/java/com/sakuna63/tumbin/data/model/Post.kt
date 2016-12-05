@@ -24,7 +24,9 @@ open class Post : RealmObject() {
         const val TYPE_PHOTO = "photo"
         const val TYPE_CHAT = "chat"
 
+        const val FORMAT_PLAIN = "plain"
         const val FORMAT_HTML = "html"
+        const val FORMAT_MARKDOWN = "markdown"
 
         const val STATE_PUBLISHED = "published"
     }
