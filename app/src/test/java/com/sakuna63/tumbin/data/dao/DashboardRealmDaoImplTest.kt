@@ -93,9 +93,9 @@ class DashboardRealmDaoImplTest {
     }
 
     @Test
-    fun findByType() {
+    fun findByTypes() {
         val expectedType = Post.TYPE_PHOTO
-        val results = dao.findByType(expectedType)
+        val results = dao.findByTypes(expectedType)
         for (post in results.results) {
             assertThat(post.type, `is`(expectedType))
         }

@@ -9,7 +9,7 @@ interface DashboardRealmDao {
 
     fun findById(id: Long): RealmResultsWrapper<Post>;
 
-    fun findByType(@Post.PostType type: String): RealmResultsWrapper<RealmResults<Post>>;
+    fun findByTypes(@Post.PostType vararg types: String): RealmResultsWrapper<RealmResults<Post>>;
 
     @AnyThread
     fun insert(posts: Collection<Post>);

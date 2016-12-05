@@ -27,10 +27,14 @@ constructor(private val realmConfiguration: RealmConfiguration) : DashboardRealm
         return RealmResultsWrapper(realm, post)
     }
 
-    override fun findByType(@Post.PostType type: String): RealmResultsWrapper<RealmResults<Post>> {
+    override fun findByTypes(@Post.PostType vararg types: String): RealmResultsWrapper<RealmResults<Post>> {
         val realm = Realm.getInstance(realmConfiguration)
-        val results = realm.where(Post::class.java).equalTo("type", type)
-                .findAllSorted("date", Sort.DESCENDING)
+        var query = realm.where(Post::class.java)
+        for ((i, type) in types.withIndex()) {
+            if (i != 0) query = query.or()
+            query = query.equalTo("type", type)
+        }
+        val results = query.findAllSorted("date", Sort.DESCENDING)
         return RealmResultsWrapper(realm, results)
     }
 
