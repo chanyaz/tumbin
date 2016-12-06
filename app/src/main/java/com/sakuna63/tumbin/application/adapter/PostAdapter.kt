@@ -1,13 +1,17 @@
 package com.sakuna63.tumbin.application.adapter
 
 import android.support.v7.widget.RecyclerView
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.sakuna63.tumbin.R
+import com.sakuna63.tumbin.application.misc.GlideImageGetter
 import com.sakuna63.tumbin.data.model.AltSize
 import com.sakuna63.tumbin.data.model.Post
 import com.sakuna63.tumbin.databinding.ListItemPostPhotoBinding
+import com.sakuna63.tumbin.databinding.ListItemPostTextBinding
+import com.sakuna63.tumbin.toHtml
 
 class PostAdapter(private val columns: Int, private var posts: List<Post>)
 : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -15,21 +19,22 @@ class PostAdapter(private val columns: Int, private var posts: List<Post>)
     var listener: Listener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        //        if (viewType == VIEW_TYPE_PHOTO) {
-        //            return new PhotoVH(inflater.inflate(R.layout.list_item_post_photo, parent, false));
-        //        }
-        // TODO: 2016/07/31 support other view type
-        return PhotoVH(inflater.inflate(R.layout.list_item_post_photo, parent, false))
+        when (viewType) {
+            VIEW_TYPE_PHOTO ->
+                return PhotoVH.newInstance(parent)
+            VIEW_TYPE_TEXT ->
+                return TextVH.newInstance(parent)
+            else -> throw IllegalArgumentException("Not supported yet")
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
 
-        // TODO: 2016/07/31 support other holder
-        if (holder is PhotoVH) {
-            holder.binding.post = PhotoPostViewModel(item)
-            holder.binding.index = position
+        when (holder) {
+            is PhotoVH -> holder.bind(PhotoPostViewModel(item), position)
+            is TextVH -> holder.bind(TextPostViewModel(item,
+                    GlideImageGetter(holder.binding.textPostBody)))
         }
 
         holder.itemView.setOnClickListener {
@@ -39,11 +44,11 @@ class PostAdapter(private val columns: Int, private var posts: List<Post>)
 
     override fun getItemViewType(position: Int): Int {
         val item = getItem(position)
-        //        if (item.getType().equals(Post.TYPE_PHOTO)) {
-        //            return VIEW_TYPE_PHOTO;
-        //        }
-        // TODO: 2016/07/31 support other type
-        return VIEW_TYPE_PHOTO
+        when (item.type) {
+            Post.TYPE_PHOTO -> return VIEW_TYPE_PHOTO
+            Post.TYPE_TEXT -> return VIEW_TYPE_TEXT
+            else -> throw IllegalArgumentException("type: $item.type is not supported yet")
+        }
     }
 
     override fun getItemCount(): Int = posts.size
@@ -64,15 +69,46 @@ class PostAdapter(private val columns: Int, private var posts: List<Post>)
         fun onPostClick(position: Int)
     }
 
-    internal inner class PhotoVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    internal class PhotoVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding: ListItemPostPhotoBinding
 
         init {
             binding = ListItemPostPhotoBinding.bind(itemView)
         }
+
+        companion object {
+            fun newInstance(parent: ViewGroup): PhotoVH {
+                val inflater = LayoutInflater.from(parent.context)
+                return PhotoVH(inflater.inflate(R.layout.list_item_post_photo, parent, false))
+            }
+        }
+
+        fun bind(photoPost: PhotoPostViewModel, index: Int) {
+            binding.post = photoPost
+            binding.index = index
+        }
     }
 
-    inner class PhotoPostViewModel(private val item: Post) {
+    internal class TextVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val binding: ListItemPostTextBinding
+
+        init {
+            binding = ListItemPostTextBinding.bind(itemView)
+        }
+
+        companion object {
+            fun newInstance(parent: ViewGroup): TextVH {
+                val inflater = LayoutInflater.from(parent.context)
+                return TextVH(inflater.inflate(R.layout.list_item_post_text, parent, false))
+            }
+        }
+
+        fun bind(textPost: TextPostViewModel) {
+            binding.post = textPost
+        }
+    }
+
+    class PhotoPostViewModel(private val item: Post) {
 
         val thumbnailUrl: String
             get() = thumbnailPhoto.url
@@ -92,6 +128,18 @@ class PostAdapter(private val columns: Int, private var posts: List<Post>)
 
         private val thumbnailPhoto: AltSize
             get() = item.photos[0].altSizes[0]
+    }
+
+    class TextPostViewModel(item: Post, imageGetter: Html.ImageGetter?) {
+
+        val title = item.title
+        val titleVisibility: Int = if (title.isEmpty()) View.GONE else View.VISIBLE
+        val body: CharSequence = when (item.format) {
+            Post.FORMAT_PLAIN -> item.body
+            Post.FORMAT_HTML -> item.body.toHtml(imageGetter)
+            Post.FORMAT_MARKDOWN -> item.body.toHtml(imageGetter)
+            else -> throw IllegalArgumentException("Unknown post format: " + item.format)
+        }
     }
 
     companion object {

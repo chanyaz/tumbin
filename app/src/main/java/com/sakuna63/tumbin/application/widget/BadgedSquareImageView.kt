@@ -50,7 +50,6 @@ class BadgedSquareImageView(context: Context, attrs: AttributeSet) : SquareImage
     }
 
     fun setBadgeLabels(labels: List<String>?) {
-        // TODO: check behavior
         if (badgeLabels == labels) {
             return
         }
