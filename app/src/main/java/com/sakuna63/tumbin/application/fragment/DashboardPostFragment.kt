@@ -28,6 +28,13 @@ class DashboardPostFragment : BaseFragment() {
     @Inject
     lateinit internal var presenter: DashboardPostPresenter
 
+    private var isCreated = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        isCreated = true
+    }
+
     override fun onCreateView(inflater: LayoutInflater?,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -37,20 +44,33 @@ class DashboardPostFragment : BaseFragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val fm = childFragmentManager
-        var fragment: PostFragment? = fm.findFragmentByTag(PostFragment.TAG) as PostFragment?
+        var fragment = findFragment()
         if (fragment == null) {
             fragment = createPostFragmentByType(postType)
-            FragmentUtils.addFragment(fm, fragment, R.id.container_fragment, PostFragment.TAG)
+            FragmentUtils.addFragment(childFragmentManager,
+                    fragment, R.id.container_fragment, PostFragment.TAG)
         }
 
         initInjector(fragment, postId)
     }
 
+    private fun findFragment() =
+            childFragmentManager.findFragmentByTag(PostFragment.TAG) as PostFragment?
+
     override fun onDestroyView() {
         super.onDestroyView()
         // call destroy() here, because presenter is injected on onViewCreated
         presenter.destroy()
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        // Fragment will crash if we call getChildFragmentManager before fragment created and in initialization process.
+        // So we ignore calling it before fragment is created.
+        // This may be not a valid solution...:(
+        if (!isCreated) return
+        val fragment = findFragment()
+        fragment?.userVisibleHint = isVisibleToUser
     }
 
     private fun initInjector(view: PostContract.View, postId: Long) {

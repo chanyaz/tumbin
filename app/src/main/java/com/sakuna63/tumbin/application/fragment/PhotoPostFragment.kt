@@ -47,7 +47,6 @@ class PhotoPostFragment : PostFragment(), NestedScrollView.OnScrollChangeListene
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-
         val isViewNotCreated = binding == null
         if (isViewNotCreated) {
             return
