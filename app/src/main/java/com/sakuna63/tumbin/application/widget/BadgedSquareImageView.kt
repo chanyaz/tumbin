@@ -81,18 +81,18 @@ class BadgedSquareImageView(context: Context, attrs: AttributeSet) : SquareImage
     }
 
     private fun layoutBadge(badges: List<Drawable>) {
-        val preBounds = Rect()
+        var badgePaddingX = badgePadding
         badges.forEachIndexed { i, badge ->
             val badgeBounds = badge.bounds
-            val offsetX = Math.abs(preBounds.left - preBounds.right)
             Gravity.apply(badgeGravity,
                     badge.intrinsicWidth,
                     badge.intrinsicHeight,
                     Rect(0, 0, width, height),
-                    badgePadding * (i + 1) + offsetX,
+                    badgePaddingX,
                     badgePadding,
                     badgeBounds)
             badge.bounds = badgeBounds
+            badgePaddingX += Math.abs(badgeBounds.left - badgeBounds.right) + badgePadding / 3
         }
         badgeBoundsSet = true
     }

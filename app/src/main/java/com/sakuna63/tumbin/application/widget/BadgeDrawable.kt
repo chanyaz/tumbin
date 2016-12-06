@@ -30,8 +30,6 @@ import android.graphics.Rect
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.text.TextPaint
-import android.util.DisplayMetrics
-
 import com.sakuna63.tumbin.application.util.Compat
 
 class BadgeDrawable(context: Context, label: String) : Drawable() {
