@@ -59,7 +59,7 @@ class PhotoPostFragment : PostFragment(), NestedScrollView.OnScrollChangeListene
         }
     }
 
-    override fun startAnimationGif() {
+    fun startAnimationGif() {
         val screenBounds = Rect()
         binding!!.scrollView.getHitRect(screenBounds)
         binding!!.containerPhotos.children().forEach {
@@ -69,7 +69,7 @@ class PhotoPostFragment : PostFragment(), NestedScrollView.OnScrollChangeListene
         }
     }
 
-    override fun stopAnimationGif() {
+    fun stopAnimationGif() {
         binding!!.containerPhotos.children().forEach {
             if (it is GifControlImageView) {
                 it.isRunnable = false

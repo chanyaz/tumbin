@@ -8,6 +8,7 @@ import android.text.Spanned
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import java.lang.ref.WeakReference
 
 @Suppress("UNCHECKED_CAST")
 fun <E : View> Activity.bindView(@IdRes resId: Int): Lazy<E> = lazy {
@@ -34,3 +35,5 @@ fun String.toHtml(imageGetter: Html.ImageGetter?): Spanned =
 fun Any.log() {
     Log.d("Tumbin", this.toString())
 }
+
+fun <E : Any> E.weak() = WeakReference(this)

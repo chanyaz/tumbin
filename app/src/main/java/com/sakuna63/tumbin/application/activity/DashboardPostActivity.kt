@@ -44,7 +44,7 @@ class DashboardPostActivity : BaseActivity() {
 
         activityComponent.inject(this)
 
-        val postsWrapper = dashboardRealmDao.findByTypes(Post.TYPE_PHOTO)
+        val postsWrapper = dashboardRealmDao.findByTypes(Post.TYPE_PHOTO, Post.TYPE_TEXT)
         val posts = postsWrapper.results
         viewPager.adapter = PostPagerAdapter(supportFragmentManager, this, posts)
 

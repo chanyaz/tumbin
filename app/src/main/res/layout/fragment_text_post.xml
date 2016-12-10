@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="post"
+            type="com.sakuna63.tumbin.data.model.Post" />
+
+        <import
+            alias="PU"
+            type="com.sakuna63.tumbin.application.util.PostUtils" />
+
+        <import type="com.sakuna63.tumbin.data.model.Avatar" />
+
+        <import
+            alias="DBU"
+            type="com.sakuna63.tumbin.application.util.DataBindingUtils" />
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/spacing_normal"
+            android:paddingTop="@dimen/spacing_normal">
+
+            <ImageView
+                android:id="@+id/image_blog_icon"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:layout_marginStart="@dimen/spacing_normal"
+                android:contentDescription="@null"
+                app:srcUrl="@{PU.getBlogAvatarUrl(PU.getBlogIdentifier(post.blogName), Avatar.SIZE_96)}"
+                tools:src="@mipmap/ic_launcher" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/icon_size"
+                android:layout_alignTop="@id/image_blog_icon"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:layout_toEndOf="@id/image_blog_icon"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_blog_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{post.blogName}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textSize="14sp"
+                    tools:text="sakuna63" />
+
+                <TextView
+                    android:id="@+id/text_blog_name_reblogged"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/spacing_tiny"
+                    android:drawableStart="@drawable/ic_repeat_12dp"
+                    android:gravity="center_vertical"
+                    android:text="@{post.rebloggedFromName}"
+                    android:visibility="@{DBU.goneIfEmpty(post.rebloggedFromName)}"
+                    tools:text="sakuna63" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image_blog_icon"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/spacing_normal"
+                android:paddingStart="@dimen/spacing_normal"
+                android:text="@{post.title}"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:background="@color/colorAccent"
+                tools:text="Title" />
+
+            <TextView
+                android:id="@+id/text_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_title"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/spacing_normal"
+                android:paddingStart="@dimen/spacing_normal"
+                android:textSize="16sp"
+                app:textBody="@{post.body}"
+                app:format="@{post.format}"
+                tools:background="@color/colorAccent"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+
+            <LinearLayout
+                android:id="@+id/container_root_blog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_body"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/spacing_normal"
+                android:paddingStart="@dimen/spacing_normal"
+                android:visibility="@{DBU.goneIfEmpty(post.rebloggedRootName)}"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:id="@+id/image_root_blog_icon"
+                    android:layout_width="@dimen/icon_size_small"
+                    android:layout_height="@dimen/icon_size_small"
+                    android:contentDescription="@null"
+                    app:srcUrl="@{PU.getBlogAvatarUrl(PU.getBlogIdentifier(post.rebloggedRootName), Avatar.SIZE_64)}"
+                    tools:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/text_root_blog_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:text="@{post.rebloggedRootName}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:textSize="14sp"
+                    tools:text="sakuna63" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_source"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/container_root_blog"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:paddingEnd="@dimen/spacing_normal"
+                android:paddingStart="@dimen/spacing_normal"
+                android:text="@{@string/label_post_source_fmt(post.sourceTitle)}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:visibility="@{DBU.goneIfEmpty(post.sourceTitle)}"
+                tools:text="出典: https://example.com" />
+
+            <TextView
+                android:id="@+id/text_notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_source"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:paddingEnd="@dimen/spacing_normal"
+                android:paddingStart="@dimen/spacing_normal"
+                android:text="@{@plurals/label_post_notes_fmt(post.noteCount, post.noteCount)}"
+                android:textStyle="bold"
+                android:visibility="@{DBU.goneIfZero(post.noteCount)}"
+                tools:text="200ノート" />
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

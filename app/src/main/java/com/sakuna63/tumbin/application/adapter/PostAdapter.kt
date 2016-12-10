@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.sakuna63.tumbin.R
 import com.sakuna63.tumbin.application.misc.GlideImageGetter
+import com.sakuna63.tumbin.application.util.PostUtils
 import com.sakuna63.tumbin.data.model.AltSize
 import com.sakuna63.tumbin.data.model.Post
 import com.sakuna63.tumbin.databinding.ListItemPostPhotoBinding
 import com.sakuna63.tumbin.databinding.ListItemPostTextBinding
-import com.sakuna63.tumbin.toHtml
 
 class PostAdapter(private val columns: Int, private var posts: List<Post>)
 : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -130,16 +130,10 @@ class PostAdapter(private val columns: Int, private var posts: List<Post>)
             get() = item.photos[0].altSizes[0]
     }
 
-    class TextPostViewModel(item: Post, imageGetter: Html.ImageGetter?) {
-
+    class TextPostViewModel(item: Post, imageGetter: Html.ImageGetter) {
         val title = item.title
         val titleVisibility: Int = if (title.isEmpty()) View.GONE else View.VISIBLE
-        val body: CharSequence = when (item.format) {
-            Post.FORMAT_PLAIN -> item.body
-            Post.FORMAT_HTML -> item.body.toHtml(imageGetter)
-            Post.FORMAT_MARKDOWN -> item.body.toHtml(imageGetter)
-            else -> throw IllegalArgumentException("Unknown post format: " + item.format)
-        }
+        val body: CharSequence = PostUtils.getFormatBody(item.body, item.format, imageGetter)
     }
 
     companion object {

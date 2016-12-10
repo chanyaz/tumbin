@@ -5,12 +5,17 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 
 import com.bumptech.glide.Glide
 import com.sakuna63.tumbin.R
+import com.sakuna63.tumbin.application.misc.GlideImageGetter
 import com.sakuna63.tumbin.application.misc.TumbinGlideTarget
+import com.sakuna63.tumbin.application.util.PostUtils
 import com.sakuna63.tumbin.application.widget.BadgedSquareImageView
 import com.sakuna63.tumbin.data.model.Photo
+import com.sakuna63.tumbin.data.model.Post
+import com.sakuna63.tumbin.toHtml
 
 @BindingAdapter("photos")
 fun ViewGroup.setPhotos(photos: List<Photo>?) {
@@ -34,4 +39,10 @@ fun ImageView.setImageByUrl(url: String?, placeHolder: Drawable?, autoPlayGif: B
             .crossFade()
             .placeholder(placeHolder)
             .into(TumbinGlideTarget(this, autoPlayGif))
+}
+
+@BindingAdapter(value = *arrayOf("textBody", "format"), requireAll = false)
+fun TextView.setTextBody(body: String, @Post.Format format: String) {
+    val imageGetter = GlideImageGetter(this)
+    this.text = PostUtils.getFormatBody(body, format, imageGetter)
 }
