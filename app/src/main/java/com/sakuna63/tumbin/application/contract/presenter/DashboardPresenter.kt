@@ -23,7 +23,7 @@ constructor(private val view: PostsContract.View,
             private val transformer: LifecycleTransformer<Any>) : PostsContract.Presenter {
 
     private val realmResultsWrapper: RealmResultsWrapper<RealmResults<Post>> by lazy {
-        dashboardRealmDao.findByType(Post.TYPE_PHOTO)
+        dashboardRealmDao.findByTypes(Post.TYPE_PHOTO, Post.TYPE_TEXT)
     }
     private var isLoading = false
     private var hasMorePost = true

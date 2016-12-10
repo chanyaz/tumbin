@@ -9,7 +9,7 @@ import com.sakuna63.tumbin.data.model.boxing.RealmString
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
-import java.util.*
+import java.util.Date
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 open class Post : RealmObject() {
@@ -24,16 +24,22 @@ open class Post : RealmObject() {
         const val TYPE_PHOTO = "photo"
         const val TYPE_CHAT = "chat"
 
+        const val FORMAT_PLAIN = "plain"
         const val FORMAT_HTML = "html"
+        const val FORMAT_MARKDOWN = "markdown"
 
         const val STATE_PUBLISHED = "published"
     }
 
+    ////////////////////////////////////////
+    // Really NonNull attributes
+    ////////////////////////////////////////
+
     lateinit var blogName: String
     @PrimaryKey
-    var id: Long = 0
+    var id: Long = -1;
     lateinit var postUrl: String
-    var slug: String? = null
+    lateinit var slug: String
     @PostType
     lateinit var type: String
     lateinit var date: Date
@@ -47,32 +53,51 @@ open class Post : RealmObject() {
     lateinit var tags: RealmList<RealmString>
     lateinit var shortUrl: String
     lateinit var summary: String
-    var recommendedSource: String? = null
-    var recommendedColor: String? = null
     var followed: Boolean = false
-    //    var highlighted: List<String>
     var liked: Boolean = false
-    var sourceUrl: String? = null
-    var sourceTitle: String? = null
     var noteCount: Int = 0
     lateinit var caption: String
     lateinit var reblog: Reblog
     @JsonProperty("trail")
     lateinit var trails: RealmList<Trail>
-    var linkUrl: String? = null
-    var imagePermalink: String? = null
-    var photoSetLayout: String? = null
-    lateinit var photos: RealmList<Photo>
     var canLike: Boolean = false
     var canReblog: Boolean = false
     var canSendInMessage: Boolean = false
     var canReply: Boolean = false
     var displayAvatar: Boolean = false
 
+    ////////////////////////////////////////
+    // Really Nullable attributes
+    ////////////////////////////////////////
+    var recommendedSource: String? = null
+    var recommendedColor: String? = null
+    var sourceUrl: String? = null
+    var sourceTitle: String? = null
+    var linkUrl: String? = null
+
+    ////////////////////////////////////////
+    // "photo" post attributes
+    ////////////////////////////////////////
+    var photos: RealmList<Photo>? = null
+    var imagePermalink: String? = null
+    // "111" means 3 lines with 1 column
+    // "211" means first line has 2 columns, others have 1 column
+    var photoSetLayout: String? = null
+
+    ////////////////////////////////////////
+    // "text" post attributes
+    ////////////////////////////////////////
+    var title: String? = null
+    var body: String? = null
+
+    ////////////////////////////////////////
     // returned by "notes_info = true"
+    ////////////////////////////////////////
     // lateinit var notes: List<Note>
 
+    ////////////////////////////////////////
     // returned by "reblog_info = true"
+    ////////////////////////////////////////
     var rebloggedFromId: Long = 0
     var rebloggedFromUrl: String? = null
     var rebloggedFromName: String? = null

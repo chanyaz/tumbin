@@ -83,8 +83,11 @@ class DashboardPostFragment : BaseFragment() {
     }
 
     private fun createPostFragmentByType(@Post.PostType type: String): PostFragment {
-        // TODO: 2016/08/16 handle other post type
-        return PhotoPostFragmentBuilder().build()
+        return when (type) {
+            Post.TYPE_PHOTO -> PhotoPostFragmentBuilder().build()
+            Post.TYPE_TEXT -> TextPostFragmentBuilder().build()
+            else -> throw IllegalArgumentException("Doesn't support yet type: $type")
+        }
     }
 
     companion object {

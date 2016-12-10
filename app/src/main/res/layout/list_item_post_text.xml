@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="post"
+            type="com.sakuna63.tumbin.application.adapter.PostAdapter.TextPostViewModel" />
+    </data>
+
+    <com.sakuna63.tumbin.application.widget.SquareLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/selectableItemBackground"
+        android:padding="@dimen/spacing_normal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_post_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{post.title}"
+            android:visibility="@{post.titleVisibility}"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="Post Title" />
+
+        <TextView
+            android:id="@+id/text_post_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:text="@{post.body}"
+            android:textSize="14sp"
+            tools:text="Post Body" />
+    </com.sakuna63.tumbin.application.widget.SquareLinearLayout>
+</layout>
