@@ -29,6 +29,12 @@ open class Post : RealmObject() {
         const val FORMAT_MARKDOWN = "markdown"
 
         const val STATE_PUBLISHED = "published"
+
+        const val VIDEO_TYPE_TUMBLR = "tumblr"
+        const val VIDEO_TYPE_YOUTUBE = "youtube"
+        const val VIDEO_TYPE_FLICKR = "flickr"
+        const val VIDEO_TYPE_INSTAGRAM = "instagram"
+        const val VIDEO_TYPE_VINE = "instagram"
     }
 
     ////////////////////////////////////////
@@ -91,6 +97,23 @@ open class Post : RealmObject() {
     var body: String? = null
 
     ////////////////////////////////////////
+    // "video" post attributes
+    ////////////////////////////////////////
+    var videoUrl: String? = null
+    var permalinkUrl: String? = null
+    var html5Capable: Boolean = false
+    var video: Video? = null
+    var thumbnailUrl: String? = null
+    var thumbnailHeight: Int = -1
+    var thumbnailWidth: Int = -1
+    var duration: Int = -1
+    @JsonProperty("player")
+    var players: RealmList<Player>? = null
+    @VideoType
+    var videoType: String? = null
+
+
+    ////////////////////////////////////////
     // returned by "notes_info = true"
     ////////////////////////////////////////
     // lateinit var notes: List<Note>
@@ -114,13 +137,17 @@ open class Post : RealmObject() {
     var rebloggedRootFollowing: Boolean = false
 
 
-    @StringDef(
-            Post.TYPE_TEXT, Post.TYPE_QUOTE, Post.TYPE_LINK, Post.TYPE_ANSWER,
-            Post.TYPE_VIDEO, Post.TYPE_AUDIO, Post.TYPE_PHOTO, Post.TYPE_CHAT
-    )
+    @StringDef(Post.TYPE_TEXT, Post.TYPE_QUOTE, Post.TYPE_LINK, Post.TYPE_ANSWER,
+            Post.TYPE_VIDEO, Post.TYPE_AUDIO, Post.TYPE_PHOTO, Post.TYPE_CHAT)
     @Target(AnnotationTarget.FUNCTION, AnnotationTarget.FIELD, AnnotationTarget.VALUE_PARAMETER)
     @Retention(AnnotationRetention.SOURCE)
     annotation class PostType
+
+    @StringDef(Post.VIDEO_TYPE_TUMBLR, Post.VIDEO_TYPE_YOUTUBE,
+            Post.VIDEO_TYPE_FLICKR, Post.VIDEO_TYPE_INSTAGRAM, Post.VIDEO_TYPE_VINE)
+    @Target(AnnotationTarget.FUNCTION, AnnotationTarget.FIELD, AnnotationTarget.VALUE_PARAMETER)
+    @Retention(AnnotationRetention.SOURCE)
+    annotation class VideoType
 
     @StringDef(Post.FORMAT_HTML)
     @Target(AnnotationTarget.FUNCTION, AnnotationTarget.FIELD, AnnotationTarget.VALUE_PARAMETER)
