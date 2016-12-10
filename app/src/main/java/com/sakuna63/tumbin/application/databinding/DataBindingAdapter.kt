@@ -44,5 +44,5 @@ fun ImageView.setImageByUrl(url: String?, placeHolder: Drawable?, autoPlayGif: B
 @BindingAdapter(value = *arrayOf("textBody", "format"), requireAll = false)
 fun TextView.setTextBody(body: String, @Post.Format format: String) {
     val imageGetter = GlideImageGetter(this)
-    this.text = PostUtils.getFormatBody(body, format, imageGetter)
+    this.text = PostUtils.getFormattedBody(body, format, imageGetter)
 }

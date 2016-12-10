@@ -17,12 +17,14 @@ object PostUtils {
 
     // TODO: enhance html decoration
     @JvmStatic
-    fun getFormatBody(body: String, @Post.Format format: String,
-                      imageGetter: Html.ImageGetter): CharSequence =
-            when (format) {
-                Post.FORMAT_PLAIN -> body
-                Post.FORMAT_HTML -> body.toHtml(imageGetter)
-                Post.FORMAT_MARKDOWN -> body.toHtml(imageGetter)
-                else -> throw IllegalArgumentException("Unknown post format: " + format)
-            }
+    fun getFormattedBody(body: String?, @Post.Format format: String,
+                         imageGetter: Html.ImageGetter): CharSequence? {
+        if (body == null) { return body }
+        return when (format) {
+            Post.FORMAT_PLAIN -> body
+            Post.FORMAT_HTML -> body.toHtml(imageGetter)
+            Post.FORMAT_MARKDOWN -> body.toHtml(imageGetter)
+            else -> throw IllegalArgumentException("Unknown post format: " + format)
+        }
+    }
 }

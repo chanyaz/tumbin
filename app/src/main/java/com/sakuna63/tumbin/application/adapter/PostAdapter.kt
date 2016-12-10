@@ -108,32 +108,37 @@ class PostAdapter(private val columns: Int, private var posts: List<Post>)
         }
     }
 
-    class PhotoPostViewModel(private val item: Post) {
+    class PhotoPostViewModel(item: Post) : PostViewModel(item, Post.TYPE_PHOTO) {
 
-        val thumbnailUrl: String
-            get() = thumbnailPhoto.url
-
+        private val thumbnailPhoto: AltSize = item.photos!![0].altSizes[0] // photo type post always some photos
+        val thumbnailUrl: String = thumbnailPhoto.url
         val badgeTexts: List<String>
-            get() {
-                val texts = mutableListOf<String>()
-                if (thumbnailPhoto.isGif()) {
-                    texts.add("GIF")
-                }
-                val numOfPhoto = item.photos.size
-                if (numOfPhoto > 1) {
-                    texts.add("x" + numOfPhoto)
-                }
-                return texts
-            }
 
-        private val thumbnailPhoto: AltSize
-            get() = item.photos[0].altSizes[0]
+        init {
+            val texts = mutableListOf<String>()
+            if (thumbnailPhoto.isGif()) {
+                texts.add("GIF")
+            }
+            val numOfPhoto = item.photos!!.size
+            if (numOfPhoto > 1) {
+                texts.add("x" + numOfPhoto)
+            }
+            badgeTexts = texts
+        }
+
     }
 
-    class TextPostViewModel(item: Post, imageGetter: Html.ImageGetter) {
+    class TextPostViewModel(item: Post, imageGetter: Html.ImageGetter)
+        : PostViewModel(item, Post.TYPE_TEXT) {
         val title = item.title
-        val titleVisibility: Int = if (title.isEmpty()) View.GONE else View.VISIBLE
-        val body: CharSequence = PostUtils.getFormatBody(item.body, item.format, imageGetter)
+        val titleVisibility = if (title == null || title.isEmpty()) View.GONE else View.VISIBLE
+        val body = PostUtils.getFormattedBody(item.body!!, item.format, imageGetter)
+    }
+
+    open class PostViewModel(item: Post, @Post.PostType type: String) {
+        init {
+            checkType(type, item.type)
+        }
     }
 
     companion object {
@@ -148,3 +153,6 @@ class PostAdapter(private val columns: Int, private var posts: List<Post>)
     }
 }
 
+public fun checkType(@Post.PostType expected: String, @Post.PostType actual: String) {
+    check(actual == expected, { "expected type is $expected but actual type is $actual" })
+}
