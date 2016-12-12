@@ -5,7 +5,6 @@ import com.sakuna63.tumbin.application.di.component.ApplicationComponent
 import com.sakuna63.tumbin.application.di.component.DaggerApplicationComponent
 import com.sakuna63.tumbin.application.di.module.ApplicationModule
 import io.realm.Realm
-import net.danlew.android.joda.JodaTimeAndroid
 
 open class App : Application() {
 
@@ -15,7 +14,6 @@ open class App : Application() {
         super.onCreate()
 
         initInjector()
-        JodaTimeAndroid.init(this)
         Realm.init(this)
     }
 
