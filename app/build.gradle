@@ -93,6 +93,15 @@ android {
         }
     }
 
+    def ignoreVariants = ['debug': 'prod', 'release': 'dev']
+    variantFilter { variant ->
+        def buildTypeName = variant.buildType.name
+        def flavorName = variant.flavors.get(0).name
+        if (ignoreVariants[buildTypeName].equals(flavorName)) {
+            variant.setIgnore(true)
+        }
+    }
+
     lintOptions {
         lintConfig rootProject.file("lint.xml")
     }
