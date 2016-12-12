@@ -12,6 +12,8 @@ def versionPatch = 0
 
 def packageName = "com.sakuna63.tumbin"
 
+def minSdk = project.hasProperty("minSdk") ? minSdk.toInteger() : 17
+
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.2"
@@ -28,7 +30,7 @@ android {
 
     defaultConfig {
         applicationId packageName
-        minSdkVersion 17
+        minSdkVersion minSdk
         targetSdkVersion 24
         versionCode 101 // versionMajor * 100 + versionMinor * 10 + versionPatch
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
@@ -85,7 +87,6 @@ android {
         }
         dev {
             applicationId "${packageName}.develop"
-            minSdkVersion 21
         }
         prod {
 
