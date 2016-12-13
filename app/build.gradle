@@ -15,8 +15,8 @@ def packageName = "com.sakuna63.tumbin"
 def minSdk = project.hasProperty("minSdk") ? minSdk.toInteger() : 17
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     dataBinding {
         enabled = true
@@ -31,7 +31,7 @@ android {
     defaultConfig {
         applicationId packageName
         minSdkVersion minSdk
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 101 // versionMajor * 100 + versionMinor * 10 + versionPatch
         versionName "${versionMajor}.${versionMinor}.${versionPatch}"
 
@@ -128,7 +128,7 @@ android {
     }
 }
 
-def supportVersion = '24.2.1'
+def supportVersion = '25.0.1'
 def rxLifecycleVersion = '1.0'
 def fragmentArgsVersion = '3.0.2'
 def retrofit2Version = '2.1.0'
