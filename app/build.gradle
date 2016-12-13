@@ -62,19 +62,20 @@ android {
         debug {
             applicationIdSuffix ".debug"
             debuggable true
-            minifyEnabled false
+            minifyEnabled true
             shrinkResources false
             testCoverageEnabled true
             signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
             buildConfigField "String", "TOKEN_DEBUG", "${TOKEN_DEBUG}"
             buildConfigField "String", "TOKEN_SECRET_DEBUG", "${TOKEN_SECRET_DEBUG}"
         }
         release {
             debuggable false
-//            minifyEnabled true
-//            shrinkResources true
-//            zipAlignEnabled true
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
             testCoverageEnabled false
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
