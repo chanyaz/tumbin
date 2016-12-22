@@ -16,7 +16,7 @@ import com.sakuna63.tumbin.application.fragment.PostsFragment
 import com.sakuna63.tumbin.application.fragment.PostsFragmentBuilder
 import com.sakuna63.tumbin.application.misc.AccountManager
 import com.sakuna63.tumbin.application.util.FragmentUtils
-import com.sakuna63.tumbin.bindView
+import com.sakuna63.tumbin.extensions.bindView
 import javax.inject.Inject
 
 class HomeActivity : BaseActivity() {

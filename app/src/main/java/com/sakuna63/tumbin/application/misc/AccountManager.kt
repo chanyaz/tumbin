@@ -3,7 +3,6 @@ package com.sakuna63.tumbin.application.misc
 import android.content.Context
 
 import com.sakuna63.tumbin.application.preferences.TokenPrefs
-import com.sakuna63.tumbin.application.util.PostUtils
 import com.sakuna63.tumbin.data.model.Token
 
 import javax.inject.Inject

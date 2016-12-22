@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.sakuna63.tumbin.application.contract.PostContract
 import com.sakuna63.tumbin.application.widget.GifControlImageView
-import com.sakuna63.tumbin.children
+import com.sakuna63.tumbin.extensions.children
 import com.sakuna63.tumbin.data.model.Post
 import com.sakuna63.tumbin.databinding.FragmentPhotoPostBinding
 
