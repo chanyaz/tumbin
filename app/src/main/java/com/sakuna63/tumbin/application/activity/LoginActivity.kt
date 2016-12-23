@@ -12,8 +12,8 @@ import com.sakuna63.tumbin.application.di.component.LoginComponent
 import com.sakuna63.tumbin.application.di.module.LoginPresenterModule
 import com.sakuna63.tumbin.application.fragment.LoginFragment
 import com.sakuna63.tumbin.application.fragment.LoginFragmentBuilder
-import com.sakuna63.tumbin.application.util.FragmentUtils
 import com.sakuna63.tumbin.databinding.ActivityLoginBinding
+import com.sakuna63.tumbin.extensions.addToContainer
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity() {
@@ -26,20 +26,18 @@ class LoginActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
 
-        val fragment = LoginFragmentBuilder().build()
-        initInjector(fragment)
-
         val fm = supportFragmentManager
-        if (!FragmentUtils.doesFragmentExist(fm, LoginFragment.TAG)) {
-            FragmentUtils.addFragment(fm, fragment, R.id.container_fragment, LoginFragment.TAG)
+        var fragment = fm.findFragmentByTag(LoginFragment.TAG) as LoginFragment?
+        fragment = fragment ?: LoginFragmentBuilder().build().apply {
+            addToContainer(fm, R.id.container_fragment, LoginFragment.TAG)
         }
+        initInjector(fragment)
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
 
-        val fm = supportFragmentManager
-        val fragment = fm.findFragmentByTag(LoginFragment.TAG) as LoginFragment
+        val fragment = supportFragmentManager.findFragmentByTag(LoginFragment.TAG) as LoginFragment
         fragment.onNewIntent(intent)
     }
 

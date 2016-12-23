@@ -35,7 +35,7 @@ open class Post : RealmObject() {
     // Really NonNull attributes
     ////////////////////////////////////////
 
-    lateinit var blogName: String
+    lateinit var blogName: BlogName
     @PrimaryKey
     var id: Long = -1;
     lateinit var postUrl: String

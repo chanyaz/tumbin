@@ -15,7 +15,7 @@ import com.sakuna63.tumbin.application.di.module.PostsPresenterModule
 import com.sakuna63.tumbin.application.fragment.PostsFragment
 import com.sakuna63.tumbin.application.fragment.PostsFragmentBuilder
 import com.sakuna63.tumbin.application.misc.AccountManager
-import com.sakuna63.tumbin.application.util.FragmentUtils
+import com.sakuna63.tumbin.extensions.addToContainer
 import com.sakuna63.tumbin.extensions.bindView
 import javax.inject.Inject
 
@@ -36,12 +36,10 @@ class HomeActivity : BaseActivity() {
         setSupportActionBar(toolBar)
 
         val fm = supportFragmentManager
-        var fragment: PostsFragment? = fm.findFragmentByTag(PostsFragment.TAG) as PostsFragment?
-        if (fragment == null) {
-            fragment = PostsFragmentBuilder().build()
-            FragmentUtils.addFragment(fm, fragment, R.id.container_fragment, PostsFragment.TAG)
+        var fragment = fm.findFragmentByTag(PostsFragment.TAG) as PostsFragment?
+        fragment = fragment ?: PostsFragmentBuilder().build().apply {
+            addToContainer(fm, R.id.container_fragment, PostsFragment.TAG)
         }
-
         initInjector(fragment)
 
         if (!accountManager.isLoggedIn) {

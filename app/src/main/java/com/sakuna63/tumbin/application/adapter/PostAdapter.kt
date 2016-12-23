@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.sakuna63.tumbin.R
 import com.sakuna63.tumbin.application.misc.GlideImageGetter
-import com.sakuna63.tumbin.application.util.PostUtils
 import com.sakuna63.tumbin.data.model.AltSize
 import com.sakuna63.tumbin.data.model.Post
 import com.sakuna63.tumbin.databinding.ListItemPostPhotoBinding
@@ -132,7 +131,7 @@ class PostAdapter(private val columns: Int, private var posts: List<Post>)
         : PostViewModel(item, Post.TYPE_TEXT) {
         val title = item.title
         val titleVisibility = if (title == null || title.isEmpty()) View.GONE else View.VISIBLE
-        val body = PostUtils.getFormattedBody(item.body!!, item.format, imageGetter)
+        val body = item.body?.format(item.format, imageGetter)
     }
 
     open class PostViewModel(item: Post, @Post.PostType type: String) {

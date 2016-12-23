@@ -13,12 +13,13 @@ import com.sakuna63.tumbin.R
 import com.sakuna63.tumbin.application.activity.DashboardPostActivity
 import com.sakuna63.tumbin.application.adapter.PostAdapter
 import com.sakuna63.tumbin.application.contract.PostsContract
-import com.sakuna63.tumbin.application.util.ViewStubProxyUtils
 import com.sakuna63.tumbin.application.widget.listener.OnScrollBottomListener
 import com.sakuna63.tumbin.data.model.Post
 import com.sakuna63.tumbin.databinding.FragmentPostsBinding
 import com.sakuna63.tumbin.databinding.ViewEmptyPostBinding
 import com.sakuna63.tumbin.databinding.ViewNetworkErrorBinding
+import com.sakuna63.tumbin.extensions.goneRoot
+import com.sakuna63.tumbin.extensions.inflate
 import com.tumblr.bookends.Bookends
 
 @FragmentWithArgs
@@ -105,27 +106,20 @@ class PostsFragment : BaseFragment(), PostsContract.View, View.OnClickListener,
             return
         }
 
-        val bindingNetworkError =
-                ViewStubProxyUtils.inflate<ViewNetworkErrorBinding>(binding.stubNetworkError)
+        val bindingNetworkError = binding.stubNetworkError.inflate<ViewNetworkErrorBinding>()
         bindingNetworkError.presenter = presenter
         bindingNetworkError.root.visibility = View.VISIBLE
     }
 
-    override fun hideError() {
-        val stubNetworkError = binding.stubNetworkError
-        ViewStubProxyUtils.goneRootIfInflated(stubNetworkError)
-    }
+    override fun hideError() = binding.stubNetworkError.goneRoot()
 
     override fun showEmpty() {
-        val bindingEmptyPost = ViewStubProxyUtils.inflate<ViewEmptyPostBinding>(binding.stubEmptyPost)
+        val bindingEmptyPost = binding.stubEmptyPost.inflate<ViewEmptyPostBinding>()
         bindingEmptyPost.presenter = presenter
         bindingEmptyPost.root.visibility = View.VISIBLE
     }
 
-    override fun hideEmpty() {
-        val stubEmptyPost = binding.stubEmptyPost
-        ViewStubProxyUtils.goneRootIfInflated(stubEmptyPost)
-    }
+    override fun hideEmpty() = binding.stubEmptyPost.goneRoot()
 
     override fun showLoading() {
         //noinspection StatementWithEmptyBody

@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+>
 
     <data>
 
         <variable
             name="post"
-            type="com.sakuna63.tumbin.data.model.Post" />
-
-        <import
-            alias="PU"
-            type="com.sakuna63.tumbin.application.util.PostUtils" />
+            type="com.sakuna63.tumbin.data.model.Post"
+        />
 
         <import type="com.sakuna63.tumbin.data.model.Avatar" />
 
         <import
-            alias="DBU"
-            type="com.sakuna63.tumbin.application.util.DataBindingUtils" />
+            alias="E"
+            type="com.sakuna63.tumbin.data.model.TypesKt"
+        />
+
+        <import type="android.view.View" />
     </data>
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+    >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingBottom="@dimen/spacing_normal"
-            android:paddingTop="@dimen/spacing_normal">
+            android:paddingTop="@dimen/spacing_normal"
+        >
 
             <ImageView
                 android:id="@+id/image_blog_icon"
@@ -38,8 +41,9 @@
                 android:layout_height="@dimen/icon_size"
                 android:layout_marginStart="@dimen/spacing_normal"
                 android:contentDescription="@null"
-                app:srcUrl="@{PU.getBlogAvatarUrl(PU.getBlogIdentifier(post.blogName), Avatar.SIZE_96)}"
-                tools:src="@mipmap/ic_launcher" />
+                app:srcUrl="@{E.url(Avatar.SIZE_96, E.identifier(post.blogName))}"
+                tools:src="@mipmap/ic_launcher"
+            />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -48,7 +52,8 @@
                 android:layout_marginStart="@dimen/spacing_small"
                 android:layout_toEndOf="@id/image_blog_icon"
                 android:gravity="center_vertical"
-                android:orientation="vertical">
+                android:orientation="vertical"
+            >
 
                 <TextView
                     android:id="@+id/text_blog_name"
@@ -57,7 +62,8 @@
                     android:text="@{post.blogName}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textSize="14sp"
-                    tools:text="sakuna63" />
+                    tools:text="sakuna63"
+                />
 
                 <TextView
                     android:id="@+id/text_blog_name_reblogged"
@@ -67,8 +73,9 @@
                     android:drawableStart="@drawable/ic_repeat_12dp"
                     android:gravity="center_vertical"
                     android:text="@{post.rebloggedFromName}"
-                    android:visibility="@{DBU.goneIfEmpty(post.rebloggedFromName)}"
-                    tools:text="sakuna63" />
+                    android:visibility="@{post.rebloggedFromName.empty ? View.GONE : View.VISIBLE}"
+                    tools:text="sakuna63"
+                />
 
             </LinearLayout>
 
@@ -85,7 +92,8 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 tools:background="@color/colorAccent"
-                tools:text="Title" />
+                tools:text="Title"
+            />
 
             <TextView
                 android:id="@+id/text_body"
@@ -97,10 +105,11 @@
                 android:paddingEnd="@dimen/spacing_normal"
                 android:paddingStart="@dimen/spacing_normal"
                 android:textSize="16sp"
-                app:textBody="@{post.body}"
                 app:format="@{post.format}"
+                app:textBody="@{post.body}"
                 tools:background="@color/colorAccent"
-                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            />
 
             <LinearLayout
                 android:id="@+id/container_root_blog"
@@ -112,16 +121,18 @@
                 android:orientation="horizontal"
                 android:paddingEnd="@dimen/spacing_normal"
                 android:paddingStart="@dimen/spacing_normal"
-                android:visibility="@{DBU.goneIfEmpty(post.rebloggedRootName)}"
-                tools:ignore="UseCompoundDrawables">
+                android:visibility="@{post.rebloggedRootName.empty ? View.GONE : View.VISIBLE}"
+                tools:ignore="UseCompoundDrawables"
+            >
 
                 <ImageView
                     android:id="@+id/image_root_blog_icon"
                     android:layout_width="@dimen/icon_size_small"
                     android:layout_height="@dimen/icon_size_small"
                     android:contentDescription="@null"
-                    app:srcUrl="@{PU.getBlogAvatarUrl(PU.getBlogIdentifier(post.rebloggedRootName), Avatar.SIZE_64)}"
-                    tools:src="@mipmap/ic_launcher" />
+                    app:srcUrl="@{E.url(Avatar.SIZE_64, E.identifier(post.blogName))}"
+                    tools:src="@mipmap/ic_launcher"
+                />
 
                 <TextView
                     android:id="@+id/text_root_blog_name"
@@ -131,7 +142,8 @@
                     android:text="@{post.rebloggedRootName}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     android:textSize="14sp"
-                    tools:text="sakuna63" />
+                    tools:text="sakuna63"
+                />
             </LinearLayout>
 
             <TextView
@@ -144,8 +156,9 @@
                 android:paddingStart="@dimen/spacing_normal"
                 android:text="@{@string/label_post_source_fmt(post.sourceTitle)}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:visibility="@{DBU.goneIfEmpty(post.sourceTitle)}"
-                tools:text="出典: https://example.com" />
+                android:visibility="@{post.sourceTitle.empty ? View.GONE : View.VISIBLE}"
+                tools:text="出典: https://example.com"
+            />
 
             <TextView
                 android:id="@+id/text_notes"
@@ -157,8 +170,9 @@
                 android:paddingStart="@dimen/spacing_normal"
                 android:text="@{@plurals/label_post_notes_fmt(post.noteCount, post.noteCount)}"
                 android:textStyle="bold"
-                android:visibility="@{DBU.goneIfZero(post.noteCount)}"
-                tools:text="200ノート" />
+                android:visibility="@{post.noteCount == 0 ? View.GONE : View.VISIBLE}"
+                tools:text="200ノート"
+            />
 
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>

@@ -1,14 +1,14 @@
 package com.sakuna63.tumbin.application.adapter
 
-import com.sakuna63.tumbin.R
 import android.content.Context
 import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.view.ViewGroup
-import com.sakuna63.tumbin.data.model.Post
+import com.sakuna63.tumbin.R
 import com.sakuna63.tumbin.application.fragment.DashboardPostFragmentBuilder
+import com.sakuna63.tumbin.data.model.Post
 
 class PostPagerAdapter(private val fm: FragmentManager,
                        private val context: Context,
@@ -44,9 +44,10 @@ class PostPagerAdapter(private val fm: FragmentManager,
             1.0f / context.resources.getInteger(R.integer.num_post_pages_same_time)
 
     private fun setFragmentVisibility(position: Int, visible: Boolean) {
-        val fragment: Fragment? = fm.findFragmentByTag(makeFragmentName(containerId!!, position))
-        fragment?.setMenuVisibility(visible)
-        fragment?.userVisibleHint = visible
+        fm.findFragmentByTag(makeFragmentName(containerId!!, position)).apply {
+            setMenuVisibility(visible)
+            userVisibleHint = visible
+        }
     }
 
     private fun makeFragmentName(@LayoutRes viewId: Int, position: Int): String {

@@ -11,7 +11,6 @@ import com.sakuna63.tumbin.application.contract.PostContract
 import com.sakuna63.tumbin.application.contract.presenter.DashboardPostPresenter
 import com.sakuna63.tumbin.application.di.component.DaggerDashboardPostComponent
 import com.sakuna63.tumbin.application.di.module.PostPresenterModule
-import com.sakuna63.tumbin.application.util.FragmentUtils
 import com.sakuna63.tumbin.data.model.Post
 import javax.inject.Inject
 
@@ -47,8 +46,7 @@ class DashboardPostFragment : BaseFragment() {
         var fragment = findFragment()
         if (fragment == null) {
             fragment = createPostFragmentByType(postType)
-            FragmentUtils.addFragment(childFragmentManager,
-                    fragment, R.id.container_fragment, PostFragment.TAG)
+            childFragmentManager.add(fragment, R.id.container_fragment, PostFragment.TAG)
         }
 
         initInjector(fragment, postId)
