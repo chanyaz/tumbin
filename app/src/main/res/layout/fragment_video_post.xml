@@ -100,18 +100,18 @@
                     android:visibility="@{DBU.visibleIfNull(post.videoUrl)}"
                     tools:text="YouTube" />
 
-                <!-- TOOD: use custom play back control view when v2.0.5 coming-->
-                <!-- https://medium.com/google-exoplayer/customizing-exoplayers-ui-components-728cf55ee07a#.hy25iykv3 -->
+                <!-- Use minHeight because of ExoPlayer bug: Player doesn't resize when finishing downloading video-->
                 <com.google.android.exoplayer2.ui.SimpleExoPlayerView
                     android:id="@+id/exo_player_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:minHeight="10dp"
                     android:focusable="true"
                     android:visibility="@{DBU.goneIfNull(post.videoUrl)}"
+                    app:loop="@{true}"
                     app:resize_mode="fixed_width"
                     app:videoUrl="@{post.videoUrl}"
                     app:volume="@{0.0f}"
-                    app:loop="@{true}"
                     tools:background="@color/colorAccent"
                     tools:layout_height="100dp" />
 
