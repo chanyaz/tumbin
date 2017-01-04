@@ -128,7 +128,7 @@ android {
     }
 }
 
-def supportVersion = '25.0.1'
+def supportVersion = '25.1.0'
 def rxLifecycleVersion = '1.0'
 def fragmentArgsVersion = '3.0.2'
 def retrofit2Version = '2.1.0'
