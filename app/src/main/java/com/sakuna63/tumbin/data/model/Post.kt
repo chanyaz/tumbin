@@ -9,7 +9,7 @@ import com.sakuna63.tumbin.data.model.boxing.RealmString
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
-import java.util.Date
+import java.util.*
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 open class Post : RealmObject() {
@@ -107,8 +107,8 @@ open class Post : RealmObject() {
     var thumbnailHeight: Int = -1
     var thumbnailWidth: Int = -1
     var duration: Int = -1
-    @JsonProperty("player")
-    var players: RealmList<Player>? = null
+    //    @JsonProperty("player")
+//    var players: RealmList<Player>? = null
     @VideoType
     var videoType: String? = null
 

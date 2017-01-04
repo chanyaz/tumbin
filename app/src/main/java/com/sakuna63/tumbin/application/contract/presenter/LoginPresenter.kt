@@ -31,10 +31,6 @@ constructor(private val context: Context,
         view.setLoginProgress(false, "")
     }
 
-    override fun destroy() {
-        // do nothing
-    }
-
     override fun onClickLogin() {
         view.setLoginButtonActive(false)
         view.setLoginProgress(true, context.getString(R.string.msg_fetch_authorization_url))

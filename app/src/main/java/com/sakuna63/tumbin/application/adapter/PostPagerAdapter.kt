@@ -1,14 +1,17 @@
 package com.sakuna63.tumbin.application.adapter
 
-import com.sakuna63.tumbin.R
 import android.content.Context
 import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.view.ViewGroup
+import com.sakuna63.tumbin.R
+import com.sakuna63.tumbin.application.fragment.ExternalVideoPostFragmentBuilder
+import com.sakuna63.tumbin.application.fragment.PhotoPostFragmentBuilder
+import com.sakuna63.tumbin.application.fragment.TextPostFragmentBuilder
+import com.sakuna63.tumbin.application.fragment.VideoPostFragmentBuilder
 import com.sakuna63.tumbin.data.model.Post
-import com.sakuna63.tumbin.application.fragment.DashboardPostFragmentBuilder
 
 class PostPagerAdapter(private val fm: FragmentManager,
                        private val context: Context,
@@ -35,7 +38,22 @@ class PostPagerAdapter(private val fm: FragmentManager,
 
     override fun getItem(position: Int): Fragment {
         val item = posts[position]
-        return DashboardPostFragmentBuilder(item.id, item.type).build()
+        return buildFragments(item)
+    }
+
+    private fun buildFragments(post: Post): Fragment {
+        return when (post.type) {
+            Post.TYPE_PHOTO -> PhotoPostFragmentBuilder(post.id).build()
+            Post.TYPE_VIDEO -> {
+                if (post.videoUrl == null) {
+                    return ExternalVideoPostFragmentBuilder(post.id).build()
+                } else {
+                    return VideoPostFragmentBuilder(post.id).build()
+                }
+            }
+            Post.TYPE_TEXT -> TextPostFragmentBuilder(post.id).build()
+            else -> throw IllegalArgumentException("Doesn't support yet type: ${post.type}")
+        }
     }
 
     override fun getCount(): Int = posts.size

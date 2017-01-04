@@ -1,22 +1,32 @@
 package com.sakuna63.tumbin.application.fragment
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.hannesdorfmann.fragmentargs.annotation.Arg
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
-import com.sakuna63.tumbin.application.contract.PostContract
+import com.sakuna63.tumbin.application.contract.VideoPostContract
+import com.sakuna63.tumbin.application.contract.presenter.VideoPostPresenter
+import com.sakuna63.tumbin.data.dao.DashboardRealmDaoImpl
 import com.sakuna63.tumbin.data.model.Post
 import com.sakuna63.tumbin.databinding.FragmentVideoPostBinding
 
 
 @FragmentWithArgs
-class VideoPostFragment : PostFragment() {
+class VideoPostFragment : BaseFragment(), VideoPostContract.View {
 
-    lateinit private var presenter: PostContract.Presenter // init on setPresenter
+    @Arg
+    var postId: Long = 0
+
+    lateinit private var presenter: VideoPostContract.Presenter // init on onCreate
     lateinit private var binding: FragmentVideoPostBinding // init on onCreateView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter = VideoPostPresenter(postId, this,
+                DashboardRealmDaoImpl(activityComponent.realmConfiguration()))
+    }
 
     override fun onCreateView(inflater: LayoutInflater?,
                               container: ViewGroup?,
@@ -32,50 +42,42 @@ class VideoPostFragment : PostFragment() {
 
     override fun showPost(post: Post) {
         binding.post = post
-        // TODO: delegate to presenter
-        binding.imageVideoThumbnail.setOnClickListener {
-            openBrowser(post.permalinkUrl!!)
-        }
+        binding.presenter = presenter
         binding.exoPlayerView.viewTreeObserver.addOnDrawListener {
             if (userVisibleHint) playVideo()
-        }
-        binding.buttonVolumeToggle.setOnClickListener {
-            // First, we use activation state. But somehow...when we change view's activation state,
-            // drawable state is not changed. So we use selection state although it's ugly.
-            // TODO: In two columns pager, second column (not truly primary) page's buttons can't be selected...
-            val volume = if (it.isSelected) 0.0f else 0.5f
-            binding.exoPlayerView.player.volume = volume
-            it.isSelected = !it.isSelected
         }
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         view ?: return
-
-        if (isVisibleToUser) {
-            playVideo()
-        } else {
-            pauseVideo()
-        }
+        presenter.onVisibleToUser(isVisibleToUser)
     }
 
-    private fun playVideo() {
+    override fun playVideo() {
         binding.exoPlayerView.player?.playWhenReady = true
     }
 
-    private fun pauseVideo() {
+    override fun pauseVideo() {
         binding.exoPlayerView.player?.playWhenReady = false
     }
 
-    private fun openBrowser(permalinkUrl: String) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(permalinkUrl))
-        startActivity(intent)
+    override fun setVideoVolume(enable: Boolean) {
+        val volume = if (enable) 0.0f else 0.5f
+        binding.exoPlayerView.player.volume = volume
+
+        // First, we use activation state. But somehow...when we change view's activation state,
+        // drawable state is not changed. So we use selection state although it's ugly.
+        // TODO: In two columns pager, second column (not truly primary) page's buttons can't be selected...
+        binding.buttonVolumeToggle.isSelected = enable
     }
 
-    // TODO: save state
     override fun onDestroyView() {
         super.onDestroyView()
+        releaseExoPlayer()
+    }
+
+    private fun releaseExoPlayer() {
         val player = binding.exoPlayerView.player
         if (player != null) {
             binding.exoPlayerView.player = null
@@ -84,8 +86,8 @@ class VideoPostFragment : PostFragment() {
         }
     }
 
-    override fun setPresenter(presenter: PostContract.Presenter) {
-        this.presenter = presenter
+    override fun setPresenter(presenter: VideoPostContract.Presenter) {
+        // no-op
     }
 
     companion object {

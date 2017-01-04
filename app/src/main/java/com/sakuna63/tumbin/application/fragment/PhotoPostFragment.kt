@@ -6,18 +6,31 @@ import android.support.v4.widget.NestedScrollView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.hannesdorfmann.fragmentargs.annotation.Arg
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
-import com.sakuna63.tumbin.application.contract.PostContract
+import com.sakuna63.tumbin.application.contract.PhotoPostContract
+import com.sakuna63.tumbin.application.contract.presenter.PhotoPostPresenter
 import com.sakuna63.tumbin.application.widget.GifControlImageView
 import com.sakuna63.tumbin.children
+import com.sakuna63.tumbin.data.dao.DashboardRealmDaoImpl
 import com.sakuna63.tumbin.data.model.Post
 import com.sakuna63.tumbin.databinding.FragmentPhotoPostBinding
 
 @FragmentWithArgs
-class PhotoPostFragment : PostFragment(), NestedScrollView.OnScrollChangeListener {
+class PhotoPostFragment : BaseFragment(),
+        PhotoPostContract.View, NestedScrollView.OnScrollChangeListener {
 
-    lateinit private var presenter: PostContract.Presenter // init on setPresenter
+    @Arg
+    var postId: Long = 0
+
+    lateinit private var presenter: PhotoPostContract.Presenter // init on onCreate
     lateinit private var binding: FragmentPhotoPostBinding // init on onCreateView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presenter = PhotoPostPresenter(postId, this,
+                DashboardRealmDaoImpl(activityComponent.realmConfiguration()))
+    }
 
     override fun onCreateView(inflater: LayoutInflater?,
                               container: ViewGroup?,
@@ -39,22 +52,17 @@ class PhotoPostFragment : PostFragment(), NestedScrollView.OnScrollChangeListene
     override fun showPost(post: Post) {
         binding.post = post
         binding.containerPhotos.viewTreeObserver.addOnDrawListener {
-            if (userVisibleHint) startAnimationGif()
+            if (userVisibleHint) startVisibleGifAnimation()
         }
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         view ?: return
-
-        if (isVisibleToUser) {
-            startAnimationGif()
-        } else {
-            stopAnimationGif()
-        }
+        presenter.onVisibleToUser(isVisibleToUser)
     }
 
-    private fun startAnimationGif() {
+    override fun startVisibleGifAnimation() {
         val screenBounds = Rect().let { binding.scrollView.getHitRect(it); it }
         binding.containerPhotos.children().forEach {
             if (it is GifControlImageView && it.getLocalVisibleRect(screenBounds)) {
@@ -63,7 +71,7 @@ class PhotoPostFragment : PostFragment(), NestedScrollView.OnScrollChangeListene
         }
     }
 
-    private fun stopAnimationGif() {
+    override fun stopAllGifAnimation() {
         binding.containerPhotos.children().forEach {
             if (it is GifControlImageView) {
                 it.isRunnable = false
@@ -71,19 +79,13 @@ class PhotoPostFragment : PostFragment(), NestedScrollView.OnScrollChangeListene
         }
     }
 
-    override fun setPresenter(presenter: PostContract.Presenter) {
-        this.presenter = presenter
+    override fun setPresenter(presenter: PhotoPostContract.Presenter) {
+        // no-op
     }
 
     override fun onScrollChange(v: NestedScrollView, scrollX: Int, scrollY: Int,
                                 oldScrollX: Int, oldScrollY: Int) {
-        val screenBounds = Rect()
-        binding.containerPhotos.children().forEach {
-            if (it is GifControlImageView) {
-                v.getHitRect(screenBounds)
-                it.isRunnable = it.getLocalVisibleRect(screenBounds)
-            }
-        }
+        presenter.onScrollChanged()
     }
 
     companion object {

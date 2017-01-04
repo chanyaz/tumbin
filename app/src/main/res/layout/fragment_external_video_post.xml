@@ -11,7 +11,8 @@
 
         <variable
             name="presenter"
-            type="com.sakuna63.tumbin.application.contract.VideoPostContract.Presenter" />
+            type="com.sakuna63.tumbin.application.contract.ExternalVideoPostContract.Presenter" />
+
 
         <import
             alias="PU"
@@ -83,33 +84,26 @@
                 android:layout_below="@id/image_blog_icon"
                 android:layout_marginTop="@dimen/spacing_small">
 
-                <!-- Use minHeight because of ExoPlayer bug: Player doesn't resize when finishing downloading video-->
-                <com.google.android.exoplayer2.ui.SimpleExoPlayerView
-                    android:id="@+id/exo_player_view"
+                <ImageView
+                    android:id="@+id/image_video_thumbnail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusable="true"
-                    android:minHeight="10dp"
-                    app:loop="@{true}"
-                    app:resize_mode="fixed_width"
-                    app:videoUrl="@{post.videoUrl}"
-                    app:volume="@{0.0f}"
-                    tools:background="@color/colorAccent"
-                    tools:layout_height="100dp" />
-
-                <ImageButton
-                    android:id="@+id/button_volume_toggle"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:layout_gravity="bottom|end"
                     android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
                     android:contentDescription="@null"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:onClick="@{() -> presenter.onVolumeToggleClick()}"
-                    android:src="@drawable/ic_volume"
-                    app:selected="@{false}" />
+                    android:onClick="@{() -> presenter.onThumbnailClick()}"
+                    android:scaleType="centerCrop"
+                    app:srcUrl="@{post.thumbnailUrl}"
+                    tools:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableTop="@drawable/ic_play_arrow_48dp"
+                    android:gravity="center"
+                    android:text="@{post.videoType}"
+                    android:textColor="@android:color/white"
+                    tools:text="YouTube" />
             </FrameLayout>
 
             <LinearLayout
