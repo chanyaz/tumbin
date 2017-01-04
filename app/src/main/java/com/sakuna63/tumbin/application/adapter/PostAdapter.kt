@@ -139,7 +139,7 @@ class PostAdapter(private val columns: Int, private var posts: List<Post>)
     }
 
     class VideoPostViewModel(item: Post) : PostViewModel(item, Post.TYPE_VIDEO) {
-        val thumbnailUrl = item.thumbnailUrl!! // video type post always have thumbnail url
+        val thumbnailUrl = item.thumbnailUrl
         val source = if (isExternalSource(item.videoType!!)) item.videoType!! else null
 
         private fun isExternalSource(@Post.VideoType videoType: String) =
