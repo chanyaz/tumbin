@@ -111,6 +111,7 @@
                     app:resize_mode="fixed_width"
                     app:videoUrl="@{post.videoUrl}"
                     app:volume="@{0.0f}"
+                    app:loop="@{true}"
                     tools:background="@color/colorAccent"
                     tools:layout_height="100dp" />
 

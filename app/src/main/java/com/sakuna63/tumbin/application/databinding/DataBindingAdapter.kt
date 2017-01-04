@@ -18,6 +18,8 @@ import com.google.android.exoplayer2.ExoPlayerLibraryInfo
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
+import com.google.android.exoplayer2.source.LoopingMediaSource
+import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.AdaptiveVideoTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView
@@ -26,7 +28,6 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import com.sakuna63.tumbin.R
 import com.sakuna63.tumbin.application.misc.GlideImageGetter
-import com.sakuna63.tumbin.application.misc.HandlerHolder
 import com.sakuna63.tumbin.application.misc.TumbinGlideTarget
 import com.sakuna63.tumbin.application.util.PostUtils
 import com.sakuna63.tumbin.application.widget.BadgedSquareImageView
@@ -78,20 +79,25 @@ fun TextView.setTextBody(body: String, @Post.Format format: String) {
     this.text = PostUtils.getFormattedBody(body, format, imageGetter)
 }
 
-@BindingAdapter(value = *arrayOf("videoUrl", "volume"), requireAll = false)
-fun SimpleExoPlayerView.setPlayer(videoUrl: String?, volume: Float?) {
+@BindingAdapter(value = *arrayOf("videoUrl", "volume", "loop"), requireAll = false)
+fun SimpleExoPlayerView.setPlayer(videoUrl: String?, volume: Float?, loop: Boolean = false) {
     player = player ?: buildPlayer(context)
-    if (videoUrl != null) player.prepare(buildVideoSource(videoUrl))
+    if (videoUrl != null) player.prepare(buildVideoSource(videoUrl, loop))
     if (volume != null) player.volume = volume
 }
 
-private fun SimpleExoPlayerView.buildVideoSource(videoUrl: String?): ExtractorMediaSource {
+
+private fun SimpleExoPlayerView.buildVideoSource(videoUrl: String?, loop: Boolean): MediaSource {
     val bandwidthMeter = DefaultBandwidthMeter()
     val hoge = DefaultHttpDataSourceFactory(getUserAgent(context, "Tumbin"), bandwidthMeter)
     val dataSourceFactory = DefaultDataSourceFactory(context, bandwidthMeter, hoge)
     val extractorsFactory = DefaultExtractorsFactory()
     val videoSource = ExtractorMediaSource(Uri.parse(videoUrl),
             dataSourceFactory, extractorsFactory, null, null)
+
+    if (loop) {
+        return LoopingMediaSource(videoSource)
+    }
     return videoSource
 }
 
