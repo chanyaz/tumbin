@@ -24,8 +24,8 @@ android {
     }
 
     dexOptions {
-        // TODO: Config for CI
-//        preDexLibraries = preDexEnabled && !isCi
+        // TODO: Diable on CI
+        preDexLibraries = true
     }
 
     defaultConfig {
