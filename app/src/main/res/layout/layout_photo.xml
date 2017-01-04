@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.sakuna63.tumbin.application.widget.GifControlImageView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/spacing_small"
-    android:adjustViewBounds="true"
-    android:contentDescription="@null"
-    android:scaleType="fitXY"
-    tools:background="@color/colorAccent"
-    tools:layout_height="100dp"
-    tools:showIn="@layout/fragment_photo_post"
-    tools:src="@mipmap/ic_launcher" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable name="height" type="java.lang.Integer" />
+        <variable name="width" type="java.lang.Integer" />
+        <variable name="srcUrl" type="java.lang.String" />
+    </data>
+
+    <com.google.android.exoplayer2.ui.AspectRatioFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        app:aspectRatio="@{(float) width/height}"
+        app:resize_mode="fixed_width">
+
+        <com.sakuna63.tumbin.application.widget.GifControlImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:background="#AAAAAA"
+            android:contentDescription="@null"
+            android:scaleType="fitXY"
+            app:srcUrl="@{srcUrl}"
+            tools:background="@color/colorAccent"
+            tools:layout_height="100dp"
+            tools:showIn="@layout/fragment_photo_post"
+            tools:src="@mipmap/ic_launcher" />
+    </com.google.android.exoplayer2.ui.AspectRatioFrameLayout>
+</layout>

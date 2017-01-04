@@ -22,6 +22,7 @@ import com.google.android.exoplayer2.source.LoopingMediaSource
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.trackselection.AdaptiveVideoTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
@@ -33,6 +34,7 @@ import com.sakuna63.tumbin.application.util.PostUtils
 import com.sakuna63.tumbin.application.widget.BadgedSquareImageView
 import com.sakuna63.tumbin.data.model.Photo
 import com.sakuna63.tumbin.data.model.Post
+import com.sakuna63.tumbin.databinding.LayoutPhotoBinding
 
 @BindingAdapter("activated")
 fun View.setActivated(activated: Boolean) {
@@ -52,10 +54,10 @@ fun View.setSelected(selected: Boolean) {
 @BindingAdapter("photos")
 fun ViewGroup.setPhotos(photos: List<Photo>?) {
     photos?.forEach {
-        val inflater = LayoutInflater.from(this.context)
-        val imageView = inflater.inflate(R.layout.layout_photo, this, false) as ImageView
-        this.addView(imageView)
-        imageView.setImageByUrl(it.altSizes[0].url, null, false)
+        val binding = LayoutPhotoBinding.inflate(LayoutInflater.from(this.context), this, true)
+        binding.height = it.altSizes[0].height
+        binding.width = it.altSizes[0].width
+        binding.srcUrl = it.altSizes[0].url
     }
 }
 
@@ -77,6 +79,11 @@ fun ImageView.setImageByUrl(url: String?, placeHolder: Drawable?, autoPlayGif: B
 fun TextView.setTextBody(body: String, @Post.Format format: String) {
     val imageGetter = GlideImageGetter(this)
     this.text = PostUtils.getFormattedBody(body, format, imageGetter)
+}
+
+@BindingAdapter("aspectRatio")
+fun SimpleExoPlayerView.setAspectRatio(aspectRatio: Float) {
+    (findViewById(R.id.exo_content_frame) as AspectRatioFrameLayout).setAspectRatio(aspectRatio)
 }
 
 @BindingAdapter(value = *arrayOf("videoUrl", "volume", "loop"), requireAll = false)

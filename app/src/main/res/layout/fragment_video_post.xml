@@ -83,13 +83,12 @@
                 android:layout_below="@id/image_blog_icon"
                 android:layout_marginTop="@dimen/spacing_small">
 
-                <!-- Use minHeight because of ExoPlayer bug: Player doesn't resize when finishing downloading video-->
                 <com.google.android.exoplayer2.ui.SimpleExoPlayerView
                     android:id="@+id/exo_player_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusable="true"
-                    android:minHeight="10dp"
+                    app:aspectRatio="@{(float) post.thumbnailWidth / post.thumbnailHeight}"
                     app:loop="@{true}"
                     app:resize_mode="fixed_width"
                     app:videoUrl="@{post.videoUrl}"

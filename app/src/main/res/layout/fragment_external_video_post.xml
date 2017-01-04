@@ -77,22 +77,27 @@
 
             </LinearLayout>
 
-            <FrameLayout
-                android:id="@+id/container_video"
+            <com.google.android.exoplayer2.ui.AspectRatioFrameLayout
+                android:id="@+id/container_thumbnail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_below="@id/image_blog_icon"
-                android:layout_marginTop="@dimen/spacing_small">
+                android:layout_marginTop="@dimen/spacing_small"
+                android:background="#AAAAAA"
+                app:aspectRatio="@{(float) post.thumbnailWidth / post.thumbnailHeight}"
+                app:resize_mode="fixed_width">
 
-                <ImageView
-                    android:id="@+id/image_video_thumbnail"
+                <com.sakuna63.tumbin.application.widget.GifControlImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
                     android:background="?attr/selectableItemBackground"
                     android:contentDescription="@null"
                     android:onClick="@{() -> presenter.onThumbnailClick()}"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitXY"
                     app:srcUrl="@{post.thumbnailUrl}"
+                    tools:layout_height="100dp"
+                    tools:showIn="@layout/fragment_photo_post"
                     tools:src="@mipmap/ic_launcher" />
 
                 <TextView
@@ -104,13 +109,13 @@
                     android:text="@{post.videoType}"
                     android:textColor="@android:color/white"
                     tools:text="YouTube" />
-            </FrameLayout>
+            </com.google.android.exoplayer2.ui.AspectRatioFrameLayout>
 
             <LinearLayout
                 android:id="@+id/container_root_blog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/container_video"
+                android:layout_below="@id/container_thumbnail"
                 android:layout_marginTop="@dimen/spacing_small"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
