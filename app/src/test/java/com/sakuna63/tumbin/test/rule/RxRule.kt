@@ -3,13 +3,10 @@ package com.sakuna63.tumbin.test.rule
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
-
 import rx.Scheduler
 import rx.android.plugins.RxAndroidPlugins
 import rx.android.plugins.RxAndroidSchedulersHook
 import rx.android.schedulers.AndroidSchedulers
-import rx.functions.Func1
-import rx.plugins.RxJavaHooks
 import rx.schedulers.Schedulers
 
 class RxRule : TestRule {

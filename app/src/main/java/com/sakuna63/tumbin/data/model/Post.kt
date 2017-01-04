@@ -34,7 +34,7 @@ open class Post : RealmObject() {
         const val VIDEO_TYPE_YOUTUBE = "youtube"
         const val VIDEO_TYPE_FLICKR = "flickr"
         const val VIDEO_TYPE_INSTAGRAM = "instagram"
-        const val VIDEO_TYPE_VINE = "instagram"
+        const val VIDEO_TYPE_VINE = "vine"
     }
 
     ////////////////////////////////////////
@@ -43,7 +43,7 @@ open class Post : RealmObject() {
 
     lateinit var blogName: String
     @PrimaryKey
-    var id: Long = -1;
+    var id: Long = -1
     lateinit var postUrl: String
     lateinit var slug: String
     @PostType

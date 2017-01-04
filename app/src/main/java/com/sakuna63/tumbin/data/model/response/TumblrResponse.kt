@@ -7,5 +7,4 @@ import com.fasterxml.jackson.annotation.JsonProperty
 @JsonIgnoreProperties(ignoreUnknown = true)
 class TumblrResponse<out T>
 @JsonCreator
-constructor(@JsonProperty("response") val response: T) {
-}
+constructor(@JsonProperty("response") val response: T)

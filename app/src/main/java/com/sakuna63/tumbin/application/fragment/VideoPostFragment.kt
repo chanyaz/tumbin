@@ -91,6 +91,6 @@ class VideoPostFragment : BaseFragment(), VideoPostContract.View {
     }
 
     companion object {
-        val TAG = VideoPostFragment::class.java.simpleName
+        val TAG = VideoPostFragment::class.java.simpleName!!
     }
 }

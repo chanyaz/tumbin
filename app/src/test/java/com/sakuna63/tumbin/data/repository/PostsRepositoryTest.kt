@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.sakuna63.tumbin.application.di.module.ApiModule
 import com.sakuna63.tumbin.data.api.TumblrService
 import com.sakuna63.tumbin.data.dao.DashboardRealmDao
-import com.sakuna63.tumbin.data.model.Post
 import com.sakuna63.tumbin.data.model.response.PostsResponse
 import com.sakuna63.tumbin.data.model.response.TumblrResponse
 import com.sakuna63.tumbin.data.util.TestUtils
@@ -12,7 +11,6 @@ import org.hamcrest.CoreMatchers.`is`
 import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Matchers
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations

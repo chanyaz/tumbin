@@ -48,6 +48,6 @@ class TextPostFragment : BaseFragment(), TextPostContract.View {
     }
 
     companion object {
-        val TAG = PhotoPostFragment::class.java.simpleName
+        val TAG = PhotoPostFragment::class.java.simpleName!!
     }
 }

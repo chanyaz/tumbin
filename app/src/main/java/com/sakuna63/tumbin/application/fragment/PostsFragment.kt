@@ -206,6 +206,6 @@ class PostsFragment : BaseFragment(), PostsContract.View, View.OnClickListener,
             binding.recycler.adapter != null && binding.recycler.adapter.itemCount > 0
 
     companion object {
-        val TAG = PostsFragment::class.java.simpleName
+        val TAG = PostsFragment::class.java.simpleName!!
     }
 }

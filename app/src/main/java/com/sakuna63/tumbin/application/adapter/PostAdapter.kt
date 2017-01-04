@@ -72,11 +72,7 @@ class PostAdapter(private val columns: Int, private var posts: List<Post>)
     }
 
     internal class PhotoVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val binding: ListItemPostPhotoBinding
-
-        init {
-            binding = ListItemPostPhotoBinding.bind(itemView)
-        }
+        val binding: ListItemPostPhotoBinding = ListItemPostPhotoBinding.bind(itemView)
 
         companion object {
             fun newInstance(parent: ViewGroup): PhotoVH {
@@ -92,11 +88,7 @@ class PostAdapter(private val columns: Int, private var posts: List<Post>)
     }
 
     internal class VideoVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val binding: ListItemPostVideoBinding
-
-        init {
-            binding = ListItemPostVideoBinding.bind(itemView)
-        }
+        val binding: ListItemPostVideoBinding = ListItemPostVideoBinding.bind(itemView)
 
         companion object {
             fun newInstance(parent: ViewGroup): VideoVH {
@@ -112,11 +104,7 @@ class PostAdapter(private val columns: Int, private var posts: List<Post>)
     }
 
     internal class TextVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val binding: ListItemPostTextBinding
-
-        init {
-            binding = ListItemPostTextBinding.bind(itemView)
-        }
+        val binding: ListItemPostTextBinding = ListItemPostTextBinding.bind(itemView)
 
         companion object {
             fun newInstance(parent: ViewGroup): TextVH {

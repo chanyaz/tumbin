@@ -17,7 +17,7 @@ import javax.inject.Inject
 class DashboardPostActivity : BaseActivity() {
 
     companion object {
-        private val EXTRA_POST_ID = "${DashboardPostActivity::class.java.simpleName}.EXTRA_POST_ID"
+        private val EXTRA_POST_ID = "${DashboardPostActivity::class.java.simpleName!!}.EXTRA_POST_ID"
 
         fun intent(context: Context, postId: Long): Intent {
             val intent = Intent(context, DashboardPostActivity::class.java)

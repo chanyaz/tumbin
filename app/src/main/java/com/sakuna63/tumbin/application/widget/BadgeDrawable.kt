@@ -18,22 +18,13 @@
 package com.sakuna63.tumbin.application.widget
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.ColorFilter
-import android.graphics.Paint
-import android.graphics.PixelFormat
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
-import android.graphics.Rect
-import android.graphics.Typeface
+import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.text.TextPaint
 import com.sakuna63.tumbin.application.util.Compat
 
 class BadgeDrawable(context: Context, label: String) : Drawable() {
-    private val paint: Paint
+    private val paint: Paint = Paint()
     private val bitmap: Bitmap
     private val width: Int
     private val height: Int
@@ -61,7 +52,6 @@ class BadgeDrawable(context: Context, label: String) : Drawable() {
                 backgroundPaint)
         textPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
         canvas.drawText(label, padding, height - padding, textPaint)
-        paint = Paint()
     }
 
     override fun getIntrinsicWidth(): Int {

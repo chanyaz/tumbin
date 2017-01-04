@@ -2,7 +2,6 @@ package com.sakuna63.tumbin.application.contract.presenter
 
 import com.sakuna63.tumbin.application.contract.PostsContract
 import com.sakuna63.tumbin.application.di.scope.ActivityScope
-import com.sakuna63.tumbin.application.util.PostUtils
 import com.sakuna63.tumbin.data.dao.DashboardRealmDao
 import com.sakuna63.tumbin.data.dao.RealmResultsWrapper
 import com.sakuna63.tumbin.data.datasource.PostDataSource
@@ -29,6 +28,7 @@ constructor(private val view: PostsContract.View,
     private var isLoading = false
     private var hasMorePost = true
 
+    @Suppress("unused")
     @Inject
     internal fun setupView() {
         this.view.setPresenter(this)

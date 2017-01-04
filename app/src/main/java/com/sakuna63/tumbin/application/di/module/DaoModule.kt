@@ -5,6 +5,7 @@ import com.sakuna63.tumbin.data.dao.DashboardRealmDaoImpl
 import dagger.Binds
 import dagger.Module
 
+@Suppress("unused")
 @Module
 abstract class DaoModule {
     @Binds

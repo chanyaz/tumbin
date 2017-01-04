@@ -24,7 +24,7 @@ android {
     }
 
     dexOptions {
-        // TODO: Diable on CI
+        // TODO: Disable on CI
         preDexLibraries = true
     }
 

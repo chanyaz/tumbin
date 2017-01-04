@@ -56,6 +56,6 @@ class ExternalVideoPostFragment : BaseFragment(), ExternalVideoPostContract.View
     }
 
     companion object {
-        val TAG = PhotoPostFragment::class.java.simpleName
+        val TAG = PhotoPostFragment::class.java.simpleName!!
     }
 }

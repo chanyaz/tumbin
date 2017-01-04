@@ -70,6 +70,6 @@ class LoginFragment : BaseFragment(), LoginContract.View {
     }
 
     companion object {
-        val TAG = LoginFragment::class.java.simpleName
+        val TAG = LoginFragment::class.java.simpleName!!
     }
 }

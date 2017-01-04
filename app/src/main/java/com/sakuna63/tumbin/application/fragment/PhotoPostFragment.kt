@@ -89,6 +89,6 @@ class PhotoPostFragment : BaseFragment(),
     }
 
     companion object {
-        val TAG = PhotoPostFragment::class.java.simpleName
+        val TAG = PhotoPostFragment::class.java.simpleName!!
     }
 }

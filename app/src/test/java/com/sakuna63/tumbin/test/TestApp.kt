@@ -9,6 +9,4 @@ import android.app.Application
  * @see https://github.com/realm/realm-java/issues/2500
  * @see https://github.com/robolectric/robolectric/issues/1171
  */
-class TestApp : Application() {
-
-}
+class TestApp : Application()

@@ -3,7 +3,6 @@ package com.sakuna63.tumbin.data.model
 import android.support.annotation.IntDef
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import io.realm.RealmObject
-import io.realm.annotations.RealmClass
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 open class Avatar : RealmObject() {
