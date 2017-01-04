@@ -94,10 +94,11 @@ constructor(private val view: PostsContract.View,
     }
 
     override fun onPostClick(post: Post) {
-        if (post.type == Post.TYPE_VIDEO && PostUtils.isExternalSource(post.videoType!!)) {
-            view.openBrowser(post.permalinkUrl!!)
-            return
-        }
+        // TODO: make optional behavior
+//        if (post.type == Post.TYPE_VIDEO && PostUtils.isExternalSource(post.videoType!!)) {
+//            view.openBrowser(post.permalinkUrl!!)
+//            return
+//        }
         view.showPostDetail(post)
     }
 

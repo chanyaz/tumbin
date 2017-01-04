@@ -1,5 +1,7 @@
 package com.sakuna63.tumbin.application.fragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +32,10 @@ class VideoPostFragment : PostFragment() {
 
     override fun showPost(post: Post) {
         binding.post = post
+        // TODO: delegate to presenter
+        binding.imageVideoThumbnail.setOnClickListener {
+            openBrowser(post.permalinkUrl!!)
+        }
         binding.exoPlayerView.viewTreeObserver.addOnDrawListener {
             if (userVisibleHint) playVideo()
         }
@@ -60,6 +66,11 @@ class VideoPostFragment : PostFragment() {
 
     private fun pauseVideo() {
         binding.exoPlayerView.player?.playWhenReady = false
+    }
+
+    private fun openBrowser(permalinkUrl: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(permalinkUrl))
+        startActivity(intent)
     }
 
     // TODO: save state
