@@ -96,10 +96,9 @@ private fun SimpleExoPlayerView.buildVideoSource(videoUrl: String?): ExtractorMe
 }
 
 private fun buildPlayer(context: Context): SimpleExoPlayer {
-    val mainHandler = HandlerHolder.handler
     val bandwidthMeter = DefaultBandwidthMeter()
     val videoTrackSelectionFactory = AdaptiveVideoTrackSelection.Factory(bandwidthMeter)
-    val trackSelector = DefaultTrackSelector(mainHandler, videoTrackSelectionFactory)
+    val trackSelector = DefaultTrackSelector(videoTrackSelectionFactory)
     val loadControl = DefaultLoadControl()
 
     return ExoPlayerFactory.newSimpleInstance(context, trackSelector, loadControl)
