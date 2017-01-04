@@ -46,6 +46,7 @@ class VideoPostFragment : BaseFragment(), VideoPostContract.View {
         binding.exoPlayerView.viewTreeObserver.addOnDrawListener {
             if (userVisibleHint) playVideo()
         }
+        binding.executePendingBindings()
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -63,8 +64,8 @@ class VideoPostFragment : BaseFragment(), VideoPostContract.View {
     }
 
     override fun setVideoVolume(enable: Boolean) {
-        val volume = if (enable) 0.0f else 0.5f
-        binding.exoPlayerView.player.volume = volume
+        val volume = if (!enable) 0.0f else 0.5f
+        binding.exoPlayerView.player?.volume = volume
 
         // First, we use activation state. But somehow...when we change view's activation state,
         // drawable state is not changed. So we use selection state although it's ugly.
