@@ -22,6 +22,8 @@ interface PostsContract {
 
         fun showPostDetail(post: Post)
 
+        fun openBrowser(permalinkUrl: String)
+
         fun scrollTo(postId: Long, offsetPx: Int)
 
         val scrollY: Int

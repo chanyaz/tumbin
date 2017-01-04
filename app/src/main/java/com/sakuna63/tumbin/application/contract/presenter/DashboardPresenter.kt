@@ -2,6 +2,7 @@ package com.sakuna63.tumbin.application.contract.presenter
 
 import com.sakuna63.tumbin.application.contract.PostsContract
 import com.sakuna63.tumbin.application.di.scope.ActivityScope
+import com.sakuna63.tumbin.application.util.PostUtils
 import com.sakuna63.tumbin.data.dao.DashboardRealmDao
 import com.sakuna63.tumbin.data.dao.RealmResultsWrapper
 import com.sakuna63.tumbin.data.datasource.PostDataSource
@@ -23,7 +24,7 @@ constructor(private val view: PostsContract.View,
             private val transformer: LifecycleTransformer<Any>) : PostsContract.Presenter {
 
     private val realmResultsWrapper: RealmResultsWrapper<RealmResults<Post>> by lazy {
-        dashboardRealmDao.findByTypes(Post.TYPE_PHOTO, Post.TYPE_TEXT)
+        dashboardRealmDao.findByTypes(Post.TYPE_PHOTO, Post.TYPE_TEXT, Post.TYPE_VIDEO)
     }
     private var isLoading = false
     private var hasMorePost = true
@@ -92,8 +93,14 @@ constructor(private val view: PostsContract.View,
         }
     }
 
-    override fun onPostClick(post: Post) =
-            view.showPostDetail(post)
+    override fun onPostClick(post: Post) {
+        // TODO: make optional behavior
+//        if (post.type == Post.TYPE_VIDEO && PostUtils.isExternalSource(post.videoType!!)) {
+//            view.openBrowser(post.permalinkUrl!!)
+//            return
+//        }
+        view.showPostDetail(post)
+    }
 
     override fun onReloadClick() {
         showLoading()

@@ -16,20 +16,19 @@ import com.sakuna63.tumbin.databinding.FragmentPhotoPostBinding
 @FragmentWithArgs
 class PhotoPostFragment : PostFragment(), NestedScrollView.OnScrollChangeListener {
 
-    lateinit internal var presenter: PostContract.Presenter
-
-    private var binding: FragmentPhotoPostBinding? = null
+    lateinit private var presenter: PostContract.Presenter // init on setPresenter
+    lateinit private var binding: FragmentPhotoPostBinding // init on onCreateView
 
     override fun onCreateView(inflater: LayoutInflater?,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = FragmentPhotoPostBinding.inflate(inflater, container, false)
-        return binding!!.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding!!.scrollView.setOnScrollChangeListener(this)
+        binding.scrollView.setOnScrollChangeListener(this)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -38,19 +37,15 @@ class PhotoPostFragment : PostFragment(), NestedScrollView.OnScrollChangeListene
     }
 
     override fun showPost(post: Post) {
-        binding!!.post = post
-        val viewTreeObserver = binding!!.containerPhotos.viewTreeObserver
-        viewTreeObserver.addOnDrawListener {
+        binding.post = post
+        binding.containerPhotos.viewTreeObserver.addOnDrawListener {
             if (userVisibleHint) startAnimationGif()
         }
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-        val isViewNotCreated = binding == null
-        if (isViewNotCreated) {
-            return
-        }
+        view ?: return
 
         if (isVisibleToUser) {
             startAnimationGif()
@@ -59,18 +54,17 @@ class PhotoPostFragment : PostFragment(), NestedScrollView.OnScrollChangeListene
         }
     }
 
-    fun startAnimationGif() {
-        val screenBounds = Rect()
-        binding!!.scrollView.getHitRect(screenBounds)
-        binding!!.containerPhotos.children().forEach {
+    private fun startAnimationGif() {
+        val screenBounds = Rect().let { binding.scrollView.getHitRect(it); it }
+        binding.containerPhotos.children().forEach {
             if (it is GifControlImageView && it.getLocalVisibleRect(screenBounds)) {
                 it.isRunnable = true
             }
         }
     }
 
-    fun stopAnimationGif() {
-        binding!!.containerPhotos.children().forEach {
+    private fun stopAnimationGif() {
+        binding.containerPhotos.children().forEach {
             if (it is GifControlImageView) {
                 it.isRunnable = false
             }
@@ -81,14 +75,14 @@ class PhotoPostFragment : PostFragment(), NestedScrollView.OnScrollChangeListene
         this.presenter = presenter
     }
 
-    override fun onScrollChange(v: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
+    override fun onScrollChange(v: NestedScrollView, scrollX: Int, scrollY: Int,
+                                oldScrollX: Int, oldScrollY: Int) {
         val screenBounds = Rect()
-        binding!!.containerPhotos.children().forEach {
-            v.getHitRect(screenBounds)
-            if (it !is GifControlImageView) {
-                return@forEach
+        binding.containerPhotos.children().forEach {
+            if (it is GifControlImageView) {
+                v.getHitRect(screenBounds)
+                it.isRunnable = it.getLocalVisibleRect(screenBounds)
             }
-            it.isRunnable = it.getLocalVisibleRect(screenBounds)
         }
     }
 

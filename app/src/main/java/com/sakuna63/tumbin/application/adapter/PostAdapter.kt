@@ -12,6 +12,7 @@ import com.sakuna63.tumbin.data.model.AltSize
 import com.sakuna63.tumbin.data.model.Post
 import com.sakuna63.tumbin.databinding.ListItemPostPhotoBinding
 import com.sakuna63.tumbin.databinding.ListItemPostTextBinding
+import com.sakuna63.tumbin.databinding.ListItemPostVideoBinding
 
 class PostAdapter(private val columns: Int, private var posts: List<Post>)
 : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -19,11 +20,10 @@ class PostAdapter(private val columns: Int, private var posts: List<Post>)
     var listener: Listener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        when (viewType) {
-            VIEW_TYPE_PHOTO ->
-                return PhotoVH.newInstance(parent)
-            VIEW_TYPE_TEXT ->
-                return TextVH.newInstance(parent)
+        return when (viewType) {
+            VIEW_TYPE_PHOTO -> PhotoVH.newInstance(parent)
+            VIEW_TYPE_VIDEO -> VideoVH.newInstance(parent)
+            VIEW_TYPE_TEXT -> TextVH.newInstance(parent)
             else -> throw IllegalArgumentException("Not supported yet")
         }
     }
@@ -33,6 +33,7 @@ class PostAdapter(private val columns: Int, private var posts: List<Post>)
 
         when (holder) {
             is PhotoVH -> holder.bind(PhotoPostViewModel(item), position)
+            is VideoVH -> holder.bind(VideoPostViewModel(item), position)
             is TextVH -> holder.bind(TextPostViewModel(item,
                     GlideImageGetter(holder.binding.textPostBody)))
         }
@@ -46,8 +47,9 @@ class PostAdapter(private val columns: Int, private var posts: List<Post>)
         val item = getItem(position)
         when (item.type) {
             Post.TYPE_PHOTO -> return VIEW_TYPE_PHOTO
+            Post.TYPE_VIDEO -> return VIEW_TYPE_VIDEO
             Post.TYPE_TEXT -> return VIEW_TYPE_TEXT
-            else -> throw IllegalArgumentException("type: $item.type is not supported yet")
+            else -> throw IllegalArgumentException("type: ${item.type} is not supported yet")
         }
     }
 
@@ -89,6 +91,26 @@ class PostAdapter(private val columns: Int, private var posts: List<Post>)
         }
     }
 
+    internal class VideoVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val binding: ListItemPostVideoBinding
+
+        init {
+            binding = ListItemPostVideoBinding.bind(itemView)
+        }
+
+        companion object {
+            fun newInstance(parent: ViewGroup): VideoVH {
+                val inflater = LayoutInflater.from(parent.context)
+                return VideoVH(inflater.inflate(R.layout.list_item_post_video, parent, false))
+            }
+        }
+
+        fun bind(textPost: VideoPostViewModel, index: Int) {
+            binding.post = textPost
+            binding.index = index
+        }
+    }
+
     internal class TextVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding: ListItemPostTextBinding
 
@@ -110,8 +132,8 @@ class PostAdapter(private val columns: Int, private var posts: List<Post>)
 
     class PhotoPostViewModel(item: Post) : PostViewModel(item, Post.TYPE_PHOTO) {
 
-        private val thumbnailPhoto: AltSize = item.photos!![0].altSizes[0] // photo type post always some photos
-        val thumbnailUrl: String = thumbnailPhoto.url
+        private val thumbnailPhoto: AltSize = item.photos!![0].altSizes[0] // photo type post always have some photos
+        val thumbnailUrl = thumbnailPhoto.url
         val badgeTexts: List<String>
 
         init {
@@ -126,6 +148,14 @@ class PostAdapter(private val columns: Int, private var posts: List<Post>)
             badgeTexts = texts
         }
 
+    }
+
+    class VideoPostViewModel(item: Post) : PostViewModel(item, Post.TYPE_VIDEO) {
+        val thumbnailUrl = item.thumbnailUrl!! // video type post always have thumbnail url
+        val source = if (isExternalSource(item.videoType!!)) item.videoType!! else null
+
+        private fun isExternalSource(@Post.VideoType videoType: String) =
+                PostUtils.isExternalSource(videoType)
     }
 
     class TextPostViewModel(item: Post, imageGetter: Html.ImageGetter)
@@ -153,6 +183,6 @@ class PostAdapter(private val columns: Int, private var posts: List<Post>)
     }
 }
 
-public fun checkType(@Post.PostType expected: String, @Post.PostType actual: String) {
+fun checkType(@Post.PostType expected: String, @Post.PostType actual: String) {
     check(actual == expected, { "expected type is $expected but actual type is $actual" })
 }

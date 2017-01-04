@@ -15,6 +15,10 @@ object PostUtils {
     fun getBlogAvatarUrl(blogIdentifier: String?, @Avatar.Size size: Long): String =
             "${ApiModule.BASE_URL}/v2/blog/$blogIdentifier/avatar/$size"
 
+    @JvmStatic
+    fun isExternalSource(@Post.VideoType videoType: String) =
+            videoType != Post.VIDEO_TYPE_TUMBLR
+
     // TODO: enhance html decoration
     @JvmStatic
     fun getFormattedBody(body: String?, @Post.Format format: String,
