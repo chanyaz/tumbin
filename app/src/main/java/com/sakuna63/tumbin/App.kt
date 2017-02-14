@@ -1,6 +1,7 @@
 package com.sakuna63.tumbin
 
 import android.app.Application
+import com.chibatching.kotpref.Kotpref
 import com.sakuna63.tumbin.application.di.component.ApplicationComponent
 import com.sakuna63.tumbin.application.di.component.DaggerApplicationComponent
 import com.sakuna63.tumbin.application.di.module.ApplicationModule
@@ -15,6 +16,7 @@ open class App : Application() {
 
         initInjector()
         Realm.init(this)
+        Kotpref.init(this)
     }
 
     private fun initInjector() {

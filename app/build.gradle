@@ -171,10 +171,10 @@ dependencies {
     kapt "com.android.databinding:compiler:$android.dataBinding.version"
     compile "com.hannesdorfmann.fragmentargs:annotation:${fragmentArgsVersion}"
     kapt "com.hannesdorfmann.fragmentargs:processor:${fragmentArgsVersion}"
-    compile "com.rejasupotaro:kvs-schema:${kvsSchemaVersion}"
-    kapt "com.rejasupotaro:kvs-schema-compiler:${kvsSchemaVersion}"
     compile "com.google.dagger:dagger:${daggerVersion}"
     kapt "com.google.dagger:dagger-compiler:${daggerVersion}"
+
+    compile "com.chibatching.kotpref:kotpref:2.0.0"
 
     debugCompile "com.squareup.okhttp3:logging-interceptor:${okHttp3Version}"
     debugCompile "com.facebook.stetho:stetho:${stethoVersion}"

@@ -35,7 +35,7 @@ class AuthenticationModule {
 
     @Singleton
     @Provides
-    fun accountManager(context: Context): AccountManager = AccountManager(context)
+    fun accountManager(): AccountManager = AccountManager()
 
     companion object {
         private val AUTHORIZE_URL = "https://www.tumblr.com/oauth/authorize?oauth_token=%s"
