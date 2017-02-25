@@ -7,7 +7,8 @@ import com.sakuna63.tumbin.application.contract.presenter.login.OauthHelper
 import com.sakuna63.tumbin.application.di.scope.ActivityScope
 import com.sakuna63.tumbin.application.misc.AccountManager
 import com.sakuna63.tumbin.data.model.Token
-import com.trello.rxlifecycle.LifecycleTransformer
+import com.trello.rxlifecycle.LifecycleProvider
+import com.trello.rxlifecycle.android.ActivityEvent
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import javax.inject.Inject
@@ -19,7 +20,7 @@ constructor(private val context: Context,
             private val view: LoginContract.View,
             private val oauthHelper: OauthHelper,
             private val accountManager: AccountManager,
-            private val transformer: LifecycleTransformer<Any>) : LoginContract.Presenter {
+            private val lifecycleProvider: LifecycleProvider<ActivityEvent>) : LoginContract.Presenter {
 
     @Inject
     internal fun setupView() {
@@ -48,7 +49,7 @@ constructor(private val context: Context,
             return
         }
         oauthHelper.getAccessToken(verifier)
-                .compose(transformer.forSingle<Token>())
+                .compose(lifecycleProvider.bindToLifecycle<Token>().forSingle<Token>())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
@@ -62,7 +63,7 @@ constructor(private val context: Context,
 
     private fun getAuthorizationUrl() {
         oauthHelper.getAuthorizationUrl()
-                .compose(transformer.forSingle<String>())
+                .compose(lifecycleProvider.bindToLifecycle<String>().forSingle<String>())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({

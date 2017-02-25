@@ -7,9 +7,9 @@ import com.sakuna63.tumbin.data.dao.RealmResultsWrapper
 import com.sakuna63.tumbin.data.datasource.PostDataSource
 import com.sakuna63.tumbin.data.model.Post
 import com.sakuna63.tumbin.extension.log
-import com.trello.rxlifecycle.LifecycleTransformer
+import com.trello.rxlifecycle.LifecycleProvider
+import com.trello.rxlifecycle.android.ActivityEvent
 import io.realm.RealmResults
-import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import javax.inject.Inject
@@ -20,7 +20,7 @@ class DashboardPresenter
 constructor(private val view: PostsContract.View,
             private val dataSource: PostDataSource,
             private val dashboardRealmDao: DashboardRealmDao,
-            private val transformer: LifecycleTransformer<Any>) : PostsContract.Presenter {
+            private val lifecycleProvider: LifecycleProvider<ActivityEvent>) : PostsContract.Presenter {
 
     private val realmResultsWrapper: RealmResultsWrapper<RealmResults<Post>> by lazy {
         dashboardRealmDao.findByTypes(Post.TYPE_PHOTO, Post.TYPE_TEXT, Post.TYPE_VIDEO)
@@ -48,19 +48,19 @@ constructor(private val view: PostsContract.View,
         realmResultsWrapper.close()
     }
 
-    @SuppressWarnings("unchecked")
     private fun loadingPost(offset: Int?, sinceId: Long?,
                             beforeId: Long?, forceRefreshCache: Boolean) {
         isLoading = true
 
-        var observable: Observable<*> =
-                dataSource.fetchDashboard(MAX_LIMIT, offset, sinceId, beforeId).toObservable()
+        var single = dataSource.fetchDashboard(MAX_LIMIT, offset, sinceId, beforeId)
         if (forceRefreshCache) {
-            observable = dataSource.deleteAllDashboardCache().toObservable<Any>().concatWith(observable)
+            single = dataSource.deleteAllDashboardCache().toSingleDefault(0)
+                    .concatWith(single)
+                    .last().toSingle()
         }
 
-        observable.last().toSingle()
-                .compose(transformer.forSingle())
+        single
+                .compose(lifecycleProvider.bindToLifecycle<Int>().forSingle<Int>())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
