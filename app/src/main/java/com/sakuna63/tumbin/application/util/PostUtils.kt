@@ -4,7 +4,7 @@ import android.text.Html
 import com.sakuna63.tumbin.application.di.module.ApiModule
 import com.sakuna63.tumbin.data.model.Avatar
 import com.sakuna63.tumbin.data.model.Post
-import com.sakuna63.tumbin.toHtml
+import com.sakuna63.tumbin.extension.toHtml
 
 
 object PostUtils {

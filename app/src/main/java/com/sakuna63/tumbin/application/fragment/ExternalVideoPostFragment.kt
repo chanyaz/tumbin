@@ -6,19 +6,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.hannesdorfmann.fragmentargs.annotation.Arg
-import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.sakuna63.tumbin.application.contract.ExternalVideoPostContract
 import com.sakuna63.tumbin.application.contract.presenter.ExternalVideoPostPresenter
+import com.sakuna63.tumbin.application.misc.Arg
 import com.sakuna63.tumbin.data.dao.DashboardRealmDaoImpl
 import com.sakuna63.tumbin.data.model.Post
 import com.sakuna63.tumbin.databinding.FragmentExternalVideoPostBinding
+import com.sakuna63.tumbin.extension.put
 
-@FragmentWithArgs
 class ExternalVideoPostFragment : BaseFragment(), ExternalVideoPostContract.View {
 
-    @Arg
-    var postId: Long = 0
+    val postId: Long by Arg()
 
     lateinit private var presenter: ExternalVideoPostContract.Presenter // init on onCreate
     lateinit private var binding: FragmentExternalVideoPostBinding // init on onCreateView
@@ -57,5 +55,9 @@ class ExternalVideoPostFragment : BaseFragment(), ExternalVideoPostContract.View
 
     companion object {
         val TAG = PhotoPostFragment::class.java.simpleName!!
+
+        fun newInstance(postId: Long) = ExternalVideoPostFragment().apply {
+            arguments.put(VideoPostFragment::postId, postId)
+        }
     }
 }

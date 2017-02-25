@@ -4,19 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.hannesdorfmann.fragmentargs.annotation.Arg
-import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.sakuna63.tumbin.application.contract.TextPostContract
 import com.sakuna63.tumbin.application.contract.presenter.TextPostPresenter
+import com.sakuna63.tumbin.application.misc.Arg
 import com.sakuna63.tumbin.data.dao.DashboardRealmDaoImpl
 import com.sakuna63.tumbin.data.model.Post
 import com.sakuna63.tumbin.databinding.FragmentTextPostBinding
+import com.sakuna63.tumbin.extension.put
 
-@FragmentWithArgs
 class TextPostFragment : BaseFragment(), TextPostContract.View {
 
-    @Arg
-    var postId: Long = 0
+    val postId: Long by Arg()
 
     lateinit private var presenter: TextPostContract.Presenter // init on onCreate
     lateinit private var binding: FragmentTextPostBinding // init on onCreateView
@@ -49,5 +47,9 @@ class TextPostFragment : BaseFragment(), TextPostContract.View {
 
     companion object {
         val TAG = PhotoPostFragment::class.java.simpleName!!
+
+        fun newInstance(postId: Long) = TextPostFragment().apply {
+            arguments.put(TextPostFragment::postId, postId)
+        }
     }
 }

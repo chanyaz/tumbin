@@ -4,20 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.hannesdorfmann.fragmentargs.annotation.Arg
-import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.sakuna63.tumbin.application.contract.VideoPostContract
 import com.sakuna63.tumbin.application.contract.presenter.VideoPostPresenter
+import com.sakuna63.tumbin.application.misc.Arg
 import com.sakuna63.tumbin.data.dao.DashboardRealmDaoImpl
 import com.sakuna63.tumbin.data.model.Post
 import com.sakuna63.tumbin.databinding.FragmentVideoPostBinding
+import com.sakuna63.tumbin.extension.put
 
 
-@FragmentWithArgs
 class VideoPostFragment : BaseFragment(), VideoPostContract.View {
 
-    @Arg
-    var postId: Long = 0
+    val postId: Long by Arg()
 
     lateinit private var presenter: VideoPostContract.Presenter // init on onCreate
     lateinit private var binding: FragmentVideoPostBinding // init on onCreateView
@@ -93,5 +91,9 @@ class VideoPostFragment : BaseFragment(), VideoPostContract.View {
 
     companion object {
         val TAG = VideoPostFragment::class.java.simpleName!!
+
+        fun newInstance(postId: Long) = VideoPostFragment().apply {
+            arguments.put(VideoPostFragment::postId, postId)
+        }
     }
 }

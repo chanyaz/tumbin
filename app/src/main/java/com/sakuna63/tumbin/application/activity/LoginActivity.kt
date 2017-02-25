@@ -11,7 +11,6 @@ import com.sakuna63.tumbin.application.di.component.DaggerLoginComponent
 import com.sakuna63.tumbin.application.di.component.LoginComponent
 import com.sakuna63.tumbin.application.di.module.LoginPresenterModule
 import com.sakuna63.tumbin.application.fragment.LoginFragment
-import com.sakuna63.tumbin.application.fragment.LoginFragmentBuilder
 import com.sakuna63.tumbin.application.util.FragmentUtils
 import com.sakuna63.tumbin.databinding.ActivityLoginBinding
 import javax.inject.Inject
@@ -26,7 +25,7 @@ class LoginActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
 
-        val fragment = LoginFragmentBuilder().build()
+        val fragment = LoginFragment.newInstance()
         initInjector(fragment)
 
         val fm = supportFragmentManager

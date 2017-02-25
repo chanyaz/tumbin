@@ -6,7 +6,7 @@ import com.sakuna63.tumbin.data.dao.DashboardRealmDao
 import com.sakuna63.tumbin.data.dao.RealmResultsWrapper
 import com.sakuna63.tumbin.data.datasource.PostDataSource
 import com.sakuna63.tumbin.data.model.Post
-import com.sakuna63.tumbin.log
+import com.sakuna63.tumbin.extension.log
 import com.trello.rxlifecycle.LifecycleTransformer
 import io.realm.RealmResults
 import rx.Observable

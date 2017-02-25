@@ -8,13 +8,11 @@ import android.support.customtabs.CustomTabsIntent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.sakuna63.tumbin.R
 import com.sakuna63.tumbin.application.activity.HomeActivity
 import com.sakuna63.tumbin.application.contract.LoginContract
 import com.sakuna63.tumbin.databinding.FragmentLoginBinding
 
-@FragmentWithArgs
 class LoginFragment : BaseFragment(), LoginContract.View {
 
     lateinit private var presenter: LoginContract.Presenter
@@ -71,5 +69,7 @@ class LoginFragment : BaseFragment(), LoginContract.View {
 
     companion object {
         val TAG = LoginFragment::class.java.simpleName!!
+
+        fun newInstance() = LoginFragment()
     }
 }

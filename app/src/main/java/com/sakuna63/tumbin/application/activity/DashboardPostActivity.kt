@@ -8,7 +8,7 @@ import com.sakuna63.tumbin.R
 import com.sakuna63.tumbin.application.adapter.PostPagerAdapter
 import com.sakuna63.tumbin.application.di.component.ActivityComponent
 import com.sakuna63.tumbin.application.di.component.DaggerActivityComponent
-import com.sakuna63.tumbin.bindView
+import com.sakuna63.tumbin.extension.bindView
 import com.sakuna63.tumbin.data.dao.DashboardRealmDao
 import com.sakuna63.tumbin.data.model.Post
 import io.realm.RealmResults

@@ -130,10 +130,8 @@ android {
 
 def supportVersion = '25.1.0'
 def rxLifecycleVersion = '1.0'
-def fragmentArgsVersion = '3.0.2'
 def retrofit2Version = '2.1.0'
 def okHttp3Version = '3.5.0'
-def kvsSchemaVersion = '5.0.1'
 def daggerVersion = '2.8'
 def stethoVersion = '1.4.1'
 def powerMockVersion = '1.6.6'
@@ -169,8 +167,6 @@ dependencies {
     compile 'com.tumblr:bookends:1.0.0@aar'
 
     kapt "com.android.databinding:compiler:$android.dataBinding.version"
-    compile "com.hannesdorfmann.fragmentargs:annotation:${fragmentArgsVersion}"
-    kapt "com.hannesdorfmann.fragmentargs:processor:${fragmentArgsVersion}"
     compile "com.google.dagger:dagger:${daggerVersion}"
     kapt "com.google.dagger:dagger-compiler:${daggerVersion}"
 

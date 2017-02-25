@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.sakuna63.tumbin.R
 import com.sakuna63.tumbin.application.activity.DashboardPostActivity
 import com.sakuna63.tumbin.application.adapter.PostAdapter
@@ -23,7 +22,6 @@ import com.sakuna63.tumbin.databinding.ViewEmptyPostBinding
 import com.sakuna63.tumbin.databinding.ViewNetworkErrorBinding
 import com.tumblr.bookends.Bookends
 
-@FragmentWithArgs
 class PostsFragment : BaseFragment(), PostsContract.View, View.OnClickListener,
         SwipeRefreshLayout.OnRefreshListener, PostAdapter.Listener {
 
@@ -207,5 +205,7 @@ class PostsFragment : BaseFragment(), PostsContract.View, View.OnClickListener,
 
     companion object {
         val TAG = PostsFragment::class.java.simpleName!!
+
+        fun newInstance() = PostsFragment()
     }
 }

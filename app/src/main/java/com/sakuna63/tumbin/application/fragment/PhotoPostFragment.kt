@@ -6,22 +6,20 @@ import android.support.v4.widget.NestedScrollView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.hannesdorfmann.fragmentargs.annotation.Arg
-import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.sakuna63.tumbin.application.contract.PhotoPostContract
 import com.sakuna63.tumbin.application.contract.presenter.PhotoPostPresenter
+import com.sakuna63.tumbin.application.misc.Arg
 import com.sakuna63.tumbin.application.widget.GifControlImageView
-import com.sakuna63.tumbin.children
 import com.sakuna63.tumbin.data.dao.DashboardRealmDaoImpl
 import com.sakuna63.tumbin.data.model.Post
 import com.sakuna63.tumbin.databinding.FragmentPhotoPostBinding
+import com.sakuna63.tumbin.extension.children
+import com.sakuna63.tumbin.extension.put
 
-@FragmentWithArgs
 class PhotoPostFragment : BaseFragment(),
         PhotoPostContract.View, NestedScrollView.OnScrollChangeListener {
 
-    @Arg
-    var postId: Long = 0
+    val postId: Long by Arg()
 
     lateinit private var presenter: PhotoPostContract.Presenter // init on onCreate
     lateinit private var binding: FragmentPhotoPostBinding // init on onCreateView
@@ -90,5 +88,9 @@ class PhotoPostFragment : BaseFragment(),
 
     companion object {
         val TAG = PhotoPostFragment::class.java.simpleName!!
+
+        fun newInstance(postId: Long) = PhotoPostFragment().apply {
+            arguments.put(PhotoPostFragment::postId, postId)
+        }
     }
 }

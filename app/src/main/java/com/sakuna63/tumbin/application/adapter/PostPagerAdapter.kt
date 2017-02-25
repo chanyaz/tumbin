@@ -7,10 +7,10 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.view.ViewGroup
 import com.sakuna63.tumbin.R
-import com.sakuna63.tumbin.application.fragment.ExternalVideoPostFragmentBuilder
-import com.sakuna63.tumbin.application.fragment.PhotoPostFragmentBuilder
-import com.sakuna63.tumbin.application.fragment.TextPostFragmentBuilder
-import com.sakuna63.tumbin.application.fragment.VideoPostFragmentBuilder
+import com.sakuna63.tumbin.application.fragment.ExternalVideoPostFragment
+import com.sakuna63.tumbin.application.fragment.PhotoPostFragment
+import com.sakuna63.tumbin.application.fragment.TextPostFragment
+import com.sakuna63.tumbin.application.fragment.VideoPostFragment
 import com.sakuna63.tumbin.data.model.Post
 
 class PostPagerAdapter(private val fm: FragmentManager,
@@ -43,15 +43,15 @@ class PostPagerAdapter(private val fm: FragmentManager,
 
     private fun buildFragments(post: Post): Fragment {
         return when (post.type) {
-            Post.TYPE_PHOTO -> PhotoPostFragmentBuilder(post.id).build()
+            Post.TYPE_PHOTO -> PhotoPostFragment.newInstance(post.id)
             Post.TYPE_VIDEO -> {
                 if (post.videoUrl == null) {
-                    return ExternalVideoPostFragmentBuilder(post.id).build()
+                    return ExternalVideoPostFragment.newInstance(post.id)
                 } else {
-                    return VideoPostFragmentBuilder(post.id).build()
+                    return VideoPostFragment.newInstance(post.id)
                 }
             }
-            Post.TYPE_TEXT -> TextPostFragmentBuilder(post.id).build()
+            Post.TYPE_TEXT -> TextPostFragment.newInstance(post.id)
             else -> throw IllegalArgumentException("Doesn't support yet type: ${post.type}")
         }
     }
