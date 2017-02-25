@@ -7,10 +7,9 @@ import android.support.v4.view.ViewPager
 import com.sakuna63.tumbin.R
 import com.sakuna63.tumbin.application.adapter.PostPagerAdapter
 import com.sakuna63.tumbin.application.di.component.ActivityComponent
-import com.sakuna63.tumbin.application.di.component.DaggerActivityComponent
-import com.sakuna63.tumbin.extension.bindView
 import com.sakuna63.tumbin.data.dao.DashboardRealmDao
 import com.sakuna63.tumbin.data.model.Post
+import com.sakuna63.tumbin.extension.bindView
 import io.realm.RealmResults
 import javax.inject.Inject
 
@@ -32,10 +31,7 @@ class DashboardPostActivity : BaseActivity() {
     private val viewPager: ViewPager by bindView(R.id.viewpager)
 
     override val activityComponent: ActivityComponent by lazy {
-        DaggerActivityComponent.builder()
-                .applicationComponent(applicationComponent)
-                .activityModule(activityModule)
-                .build()
+        applicationComponent.plus(activityModule)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

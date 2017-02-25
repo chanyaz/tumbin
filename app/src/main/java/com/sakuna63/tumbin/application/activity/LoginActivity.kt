@@ -7,7 +7,6 @@ import com.sakuna63.tumbin.R
 import com.sakuna63.tumbin.application.contract.LoginContract
 import com.sakuna63.tumbin.application.contract.presenter.LoginPresenter
 import com.sakuna63.tumbin.application.di.component.ActivityComponent
-import com.sakuna63.tumbin.application.di.component.DaggerLoginComponent
 import com.sakuna63.tumbin.application.di.component.LoginComponent
 import com.sakuna63.tumbin.application.di.module.LoginPresenterModule
 import com.sakuna63.tumbin.application.fragment.LoginFragment
@@ -29,7 +28,6 @@ class LoginActivity : BaseActivity() {
         val fragment = LoginFragment.newInstance()
         initInjector(fragment)
 
-        val fm = supportFragmentManager
         if (!hasFragment(LoginFragment.TAG)) {
             addFragment(fragment, R.id.container_fragment, LoginFragment.TAG)
         }
@@ -47,11 +45,7 @@ class LoginActivity : BaseActivity() {
         get() = component
 
     private fun initInjector(view: LoginContract.View) {
-        component = DaggerLoginComponent.builder()
-                .applicationComponent(applicationComponent)
-                .activityModule(activityModule)
-                .loginPresenterModule(LoginPresenterModule(view))
-                .build()
+        component = applicationComponent.plus(activityModule, LoginPresenterModule(view))
         component.inject(this)
     }
 }

@@ -9,7 +9,6 @@ import com.sakuna63.tumbin.R
 import com.sakuna63.tumbin.application.contract.PostsContract
 import com.sakuna63.tumbin.application.contract.presenter.DashboardPresenter
 import com.sakuna63.tumbin.application.di.component.ActivityComponent
-import com.sakuna63.tumbin.application.di.component.DaggerHomeComponent
 import com.sakuna63.tumbin.application.di.component.HomeComponent
 import com.sakuna63.tumbin.application.di.module.PostsPresenterModule
 import com.sakuna63.tumbin.application.fragment.PostsFragment
@@ -73,11 +72,7 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun initInjector(view: PostsContract.View) {
-        component = DaggerHomeComponent.builder()
-                .applicationComponent(applicationComponent)
-                .activityModule(activityModule)
-                .postsPresenterModule(PostsPresenterModule(view))
-                .build()
+        component = applicationComponent.plus(activityModule, PostsPresenterModule(view))
         component.inject(this)
     }
 }

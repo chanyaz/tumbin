@@ -1,17 +1,13 @@
 package com.sakuna63.tumbin.application.fragment
 
 import com.sakuna63.tumbin.application.activity.BaseActivity
-import com.sakuna63.tumbin.application.di.component.DaggerFragmentComponent
 import com.sakuna63.tumbin.application.di.module.FragmentModule
 import com.trello.rxlifecycle.components.support.RxFragment
 
 abstract class BaseFragment : RxFragment() {
 
     internal val component by lazy {
-        DaggerFragmentComponent.builder()
-                .activityComponent(activityComponent)
-                .fragmentModule(fragmentModule)
-                .build()
+        activityComponent.plus(fragmentModule)
     }
 
     internal val activityComponent by lazy {
