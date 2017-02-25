@@ -11,8 +11,9 @@ import com.sakuna63.tumbin.application.di.component.DaggerLoginComponent
 import com.sakuna63.tumbin.application.di.component.LoginComponent
 import com.sakuna63.tumbin.application.di.module.LoginPresenterModule
 import com.sakuna63.tumbin.application.fragment.LoginFragment
-import com.sakuna63.tumbin.application.util.FragmentUtils
 import com.sakuna63.tumbin.databinding.ActivityLoginBinding
+import com.sakuna63.tumbin.extension.addFragment
+import com.sakuna63.tumbin.extension.hasFragment
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity() {
@@ -29,8 +30,8 @@ class LoginActivity : BaseActivity() {
         initInjector(fragment)
 
         val fm = supportFragmentManager
-        if (!FragmentUtils.doesFragmentExist(fm, LoginFragment.TAG)) {
-            FragmentUtils.addFragment(fm, fragment, R.id.container_fragment, LoginFragment.TAG)
+        if (!hasFragment(LoginFragment.TAG)) {
+            addFragment(fragment, R.id.container_fragment, LoginFragment.TAG)
         }
     }
 

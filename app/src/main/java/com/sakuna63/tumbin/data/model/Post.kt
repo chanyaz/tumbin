@@ -1,11 +1,14 @@
 package com.sakuna63.tumbin.data.model
 
 import android.support.annotation.StringDef
+import android.text.Html
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.sakuna63.tumbin.application.di.module.ApiModule
 import com.sakuna63.tumbin.data.jackson.deserializer.RealmStringListDeserializer
 import com.sakuna63.tumbin.data.model.boxing.RealmString
+import com.sakuna63.tumbin.extension.toHtml
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
@@ -136,7 +139,6 @@ open class Post : RealmObject() {
     var rebloggedRootCanMessage: Boolean = false
     var rebloggedRootFollowing: Boolean = false
 
-
     @StringDef(Post.TYPE_TEXT, Post.TYPE_QUOTE, Post.TYPE_LINK, Post.TYPE_ANSWER,
             Post.TYPE_VIDEO, Post.TYPE_AUDIO, Post.TYPE_PHOTO, Post.TYPE_CHAT)
     @Target(AnnotationTarget.FUNCTION, AnnotationTarget.FIELD, AnnotationTarget.VALUE_PARAMETER)
@@ -158,4 +160,29 @@ open class Post : RealmObject() {
     @Target(AnnotationTarget.FUNCTION, AnnotationTarget.FIELD, AnnotationTarget.VALUE_PARAMETER)
     @Retention(AnnotationRetention.SOURCE)
     annotation class State
+
+    fun getBlogIdentifier() = buildBlogIdentifier(blogName)
+
+    fun getRebloggedRootIdentifier() = buildBlogIdentifier(rebloggedRootName ?: "")
+
+    private fun buildBlogIdentifier(blogName: String) = "$blogName.tumblr.com"
+
+    fun isExternalSource() = videoType != Post.VIDEO_TYPE_TUMBLR
+
+    fun getFormattedBody(imageGetter: Html.ImageGetter): CharSequence? {
+        val body = this.body ?: return body
+        return when (format) {
+            Post.FORMAT_PLAIN -> body
+            Post.FORMAT_HTML -> body.toHtml(imageGetter)
+            Post.FORMAT_MARKDOWN -> body.toHtml(imageGetter)
+            else -> throw IllegalArgumentException("Unknown post format: " + format)
+        }
+    }
+
+    fun getBlogAvatarUrl(@Avatar.Size size: Long): String =
+            "${ApiModule.BASE_URL}/v2/blog/${getBlogIdentifier()}/avatar/$size"
+
+    fun getRebloggedRootAvatarUrl(@Avatar.Size size: Long): String =
+            "${ApiModule.BASE_URL}/v2/blog/${getRebloggedRootIdentifier()}/avatar/$size"
+
 }

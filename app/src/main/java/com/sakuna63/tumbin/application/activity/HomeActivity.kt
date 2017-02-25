@@ -14,7 +14,7 @@ import com.sakuna63.tumbin.application.di.component.HomeComponent
 import com.sakuna63.tumbin.application.di.module.PostsPresenterModule
 import com.sakuna63.tumbin.application.fragment.PostsFragment
 import com.sakuna63.tumbin.application.misc.AccountManager
-import com.sakuna63.tumbin.application.util.FragmentUtils
+import com.sakuna63.tumbin.extension.addFragment
 import com.sakuna63.tumbin.extension.bindView
 import javax.inject.Inject
 
@@ -38,7 +38,7 @@ class HomeActivity : BaseActivity() {
         var fragment: PostsFragment? = fm.findFragmentByTag(PostsFragment.TAG) as PostsFragment?
         if (fragment == null) {
             fragment = PostsFragment.newInstance()
-            FragmentUtils.addFragment(fm, fragment, R.id.container_fragment, PostsFragment.TAG)
+            addFragment(fragment, R.id.container_fragment, PostsFragment.TAG)
         }
 
         initInjector(fragment)

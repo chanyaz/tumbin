@@ -10,12 +10,8 @@ import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.SimpleTarget
 import com.sakuna63.tumbin.application.widget.DrawableWrapper
 import com.sakuna63.tumbin.extension.weak
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class GlideImageGetter
-@Inject
 constructor(val container: TextView) : Html.ImageGetter {
 
     override fun getDrawable(source: String): Drawable {

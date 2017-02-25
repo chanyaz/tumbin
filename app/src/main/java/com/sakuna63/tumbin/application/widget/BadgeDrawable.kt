@@ -18,10 +18,19 @@
 package com.sakuna63.tumbin.application.widget
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.ColorFilter
+import android.graphics.Paint
+import android.graphics.PixelFormat
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.Rect
+import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.text.TextPaint
-import com.sakuna63.tumbin.application.util.Compat
+import com.sakuna63.tumbin.extension.drawRoundRectCompat
 
 class BadgeDrawable(context: Context, label: String) : Drawable() {
     private val paint: Paint = Paint()
@@ -48,8 +57,7 @@ class BadgeDrawable(context: Context, label: String) : Drawable() {
         val canvas = Canvas(bitmap)
         val backgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         backgroundPaint.color = BACKGROUND_COLOR
-        Compat.drawRoundRect(canvas, 0, 0, width, height, cornerRadius, cornerRadius,
-                backgroundPaint)
+        canvas.drawRoundRectCompat(0, 0, width, height, cornerRadius, cornerRadius, backgroundPaint)
         textPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
         canvas.drawText(label, padding, height - padding, textPaint)
     }

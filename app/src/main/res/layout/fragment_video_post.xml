@@ -13,10 +13,6 @@
             name="presenter"
             type="com.sakuna63.tumbin.application.contract.VideoPostContract.Presenter" />
 
-        <import
-            alias="PU"
-            type="com.sakuna63.tumbin.application.util.PostUtils" />
-
         <import type="com.sakuna63.tumbin.data.model.Avatar" />
 
         <import
@@ -42,7 +38,7 @@
                 android:layout_height="@dimen/icon_size"
                 android:layout_marginStart="@dimen/spacing_normal"
                 android:contentDescription="@null"
-                app:srcUrl="@{PU.getBlogAvatarUrl(PU.getBlogIdentifier(post.blogName), Avatar.SIZE_96)}"
+                app:srcUrl="@{post.getBlogAvatarUrl(Avatar.SIZE_96)}"
                 tools:src="@mipmap/ic_launcher" />
 
             <LinearLayout
@@ -129,7 +125,7 @@
                     android:layout_width="@dimen/icon_size_small"
                     android:layout_height="@dimen/icon_size_small"
                     android:contentDescription="@null"
-                    app:srcUrl="@{PU.getBlogAvatarUrl(PU.getBlogIdentifier(post.rebloggedRootName), Avatar.SIZE_64)}"
+                    app:srcUrl="@{post.getRebloggedRootAvatarUrl(Avatar.SIZE_64)}"
                     tools:src="@mipmap/ic_launcher" />
 
                 <TextView
