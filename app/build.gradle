@@ -128,12 +128,12 @@ android {
     }
 }
 
-def supportVersion = '25.1.0'
+def supportVersion = '25.2.0'
 def rxLifecycleVersion = '1.0'
-def retrofit2Version = '2.1.0'
-def okHttp3Version = '3.5.0'
-def daggerVersion = '2.8'
-def stethoVersion = '1.4.1'
+def retrofit2Version = '2.2.0'
+def okHttp3Version = '3.6.0'
+def daggerVersion = '2.9'
+def stethoVersion = '1.4.2'
 def powerMockVersion = '1.6.6'
 
 dependencies {
@@ -144,11 +144,11 @@ dependencies {
     compile "com.android.support:support-annotations:${supportVersion}"
     compile "com.android.support:customtabs:${supportVersion}"
 
-    compile 'com.google.android.exoplayer:exoplayer:r2.1.1'
+    compile 'com.google.android.exoplayer:exoplayer:r2.2.0'
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
 
-    compile 'io.reactivex:rxjava:1.2.3'
+    compile 'io.reactivex:rxjava:1.2.7'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile "com.trello:rxlifecycle:${rxLifecycleVersion}"
     compile "com.trello:rxlifecycle-components:${rxLifecycleVersion}"
@@ -183,7 +183,7 @@ dependencies {
     testCompile "org.powermock:powermock-module-junit4-rule:${powerMockVersion}"
     testCompile "org.powermock:powermock-classloading-xstream:${powerMockVersion}"
     testCompile "org.powermock:powermock-api-mockito:${powerMockVersion}"
-    testCompile "org.robolectric:robolectric:3.1.4"
+    testCompile "org.robolectric:robolectric:3.2.1"
 }
 
 kapt {
