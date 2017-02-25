@@ -38,8 +38,10 @@ constructor(private val context: Context,
         getAuthorizationUrl()
     }
 
-    // tumbin://authorize?oauth_token=token&oauth_verifier=verifier#_=_
-    override fun onLoginCallback(dataString: String) {
+    // e.g. dataString == tumbin://authorize?oauth_token=token&oauth_verifier=verifier#_=_
+    override fun onLoginCallback(dataString: String?) {
+        dataString ?: return
+
         view.setLoginProgress(true, context.getString(R.string.msg_fetch_authorization_token))
 
         val verifier = OauthHelper.extractVerifier(dataString)

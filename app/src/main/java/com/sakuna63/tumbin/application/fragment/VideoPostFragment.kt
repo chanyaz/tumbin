@@ -10,6 +10,7 @@ import com.sakuna63.tumbin.application.misc.Arg
 import com.sakuna63.tumbin.data.dao.DashboardRealmDaoImpl
 import com.sakuna63.tumbin.data.model.Post
 import com.sakuna63.tumbin.databinding.FragmentVideoPostBinding
+import com.sakuna63.tumbin.extension.applyArguments
 import com.sakuna63.tumbin.extension.put
 
 
@@ -92,8 +93,8 @@ class VideoPostFragment : BaseFragment(), VideoPostContract.View {
     companion object {
         val TAG = VideoPostFragment::class.java.simpleName!!
 
-        fun newInstance(postId: Long) = VideoPostFragment().apply {
-            arguments.put(VideoPostFragment::postId, postId)
+        fun newInstance(postId: Long) = VideoPostFragment().applyArguments {
+            put(VideoPostFragment::postId, postId)
         }
     }
 }

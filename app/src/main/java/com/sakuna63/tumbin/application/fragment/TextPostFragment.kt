@@ -10,6 +10,7 @@ import com.sakuna63.tumbin.application.misc.Arg
 import com.sakuna63.tumbin.data.dao.DashboardRealmDaoImpl
 import com.sakuna63.tumbin.data.model.Post
 import com.sakuna63.tumbin.databinding.FragmentTextPostBinding
+import com.sakuna63.tumbin.extension.applyArguments
 import com.sakuna63.tumbin.extension.put
 
 class TextPostFragment : BaseFragment(), TextPostContract.View {
@@ -48,8 +49,8 @@ class TextPostFragment : BaseFragment(), TextPostContract.View {
     companion object {
         val TAG = PhotoPostFragment::class.java.simpleName!!
 
-        fun newInstance(postId: Long) = TextPostFragment().apply {
-            arguments.put(TextPostFragment::postId, postId)
+        fun newInstance(postId: Long) = TextPostFragment().applyArguments {
+            put(TextPostFragment::postId, postId)
         }
     }
 }

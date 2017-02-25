@@ -1,9 +1,9 @@
 package com.sakuna63.tumbin
 
 import com.facebook.stetho.Stetho
+import com.sakuna63.tumbin.application.di.component.DaggerDebugApplicationComponent
 import com.sakuna63.tumbin.application.di.module.DebugApiModule
 import com.sakuna63.tumbin.application.di.module.DebugApplicationModule
-import com.sakuna63.tumbin.application.di.component.DaggerDebugApplicationComponent
 import com.sakuna63.tumbin.application.misc.AccountManager
 import com.sakuna63.tumbin.data.model.Token
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider

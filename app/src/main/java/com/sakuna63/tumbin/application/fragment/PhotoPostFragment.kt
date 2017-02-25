@@ -1,5 +1,6 @@
 package com.sakuna63.tumbin.application.fragment
 
+import android.databinding.DataBindingUtil
 import android.graphics.Rect
 import android.os.Bundle
 import android.support.v4.widget.NestedScrollView
@@ -9,10 +10,11 @@ import android.view.ViewGroup
 import com.sakuna63.tumbin.application.contract.PhotoPostContract
 import com.sakuna63.tumbin.application.contract.presenter.PhotoPostPresenter
 import com.sakuna63.tumbin.application.misc.Arg
-import com.sakuna63.tumbin.application.widget.GifControlImageView
 import com.sakuna63.tumbin.data.dao.DashboardRealmDaoImpl
 import com.sakuna63.tumbin.data.model.Post
 import com.sakuna63.tumbin.databinding.FragmentPhotoPostBinding
+import com.sakuna63.tumbin.databinding.LayoutPhotoBinding
+import com.sakuna63.tumbin.extension.applyArguments
 import com.sakuna63.tumbin.extension.children
 import com.sakuna63.tumbin.extension.put
 
@@ -61,19 +63,19 @@ class PhotoPostFragment : BaseFragment(),
     }
 
     override fun startVisibleGifAnimation() {
-        val screenBounds = Rect().let { binding.scrollView.getHitRect(it); it }
+        val screenBounds = Rect().apply { binding.scrollView.getHitRect(this) }
         binding.containerPhotos.children().forEach {
-            if (it is GifControlImageView && it.getLocalVisibleRect(screenBounds)) {
-                it.isRunnable = true
+            val image = DataBindingUtil.getBinding<LayoutPhotoBinding?>(it)?.image
+            if (image != null && image.getLocalVisibleRect(screenBounds)) {
+                image.isRunnable = true
             }
         }
     }
 
     override fun stopAllGifAnimation() {
         binding.containerPhotos.children().forEach {
-            if (it is GifControlImageView) {
-                it.isRunnable = false
-            }
+            val image = DataBindingUtil.getBinding<LayoutPhotoBinding?>(it)?.image
+            image?.apply { isRunnable = false }
         }
     }
 
@@ -89,8 +91,8 @@ class PhotoPostFragment : BaseFragment(),
     companion object {
         val TAG = PhotoPostFragment::class.java.simpleName!!
 
-        fun newInstance(postId: Long) = PhotoPostFragment().apply {
-            arguments.put(PhotoPostFragment::postId, postId)
+        fun newInstance(postId: Long) = PhotoPostFragment().applyArguments {
+            put(PhotoPostFragment::postId, postId)
         }
     }
 }

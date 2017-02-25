@@ -1,6 +1,5 @@
 package com.sakuna63.tumbin.application.di.module
 
-import android.content.Context
 import com.sakuna63.tumbin.BuildConfig
 import com.sakuna63.tumbin.application.misc.AccountManager
 import dagger.Module
@@ -26,9 +25,9 @@ class AuthenticationModule {
     fun oAuthConsumer(accountManager: AccountManager): OAuthConsumer {
         val consumer = OkHttpOAuthConsumer(BuildConfig.CONSUMER_KEY, BuildConfig.CONSUMER_KEY_SECRET)
         if (accountManager.isLoggedIn) {
-            val token = accountManager.token
+            val token = accountManager.token ?: return consumer
             //noinspection ConstantConditions
-            consumer.setTokenWithSecret(token!!.token, token.tokenSecret)
+            consumer.setTokenWithSecret(token.token, token.tokenSecret)
         }
         return consumer
     }

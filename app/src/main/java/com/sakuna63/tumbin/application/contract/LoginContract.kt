@@ -17,6 +17,6 @@ interface LoginContract {
     interface Presenter : BasePresenter {
         fun onClickLogin()
 
-        fun onLoginCallback(dataString: String)
+        fun onLoginCallback(dataString: String?)
     }
 }
