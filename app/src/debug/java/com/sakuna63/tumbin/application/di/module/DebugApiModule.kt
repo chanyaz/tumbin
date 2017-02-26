@@ -1,6 +1,5 @@
 package com.sakuna63.tumbin.application.di.module
 
-import com.facebook.stetho.okhttp3.StethoInterceptor
 import oauth.signpost.OAuthConsumer
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -19,7 +18,7 @@ class DebugApiModule : ApiModule() {
 
     private fun addDebugInterceptors(builder: OkHttpClient.Builder): OkHttpClient.Builder {
         return builder
-                .addNetworkInterceptor(StethoInterceptor())
+//                .addNetworkInterceptor(StethoInterceptor())
                 .addNetworkInterceptor(buildHttpLoggingInterceptor())
     }
 
