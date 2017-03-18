@@ -20,7 +20,7 @@ android {
 
     dataBinding {
         enabled = true
-        version = '2.2.0'
+        version = android_plugin_version
     }
 
     dexOptions {
@@ -129,7 +129,7 @@ android {
     }
 }
 
-def supportVersion = '25.2.0'
+def supportVersion = '25.3.0'
 def rxLifecycleVersion = '1.0'
 def retrofit2Version = '2.2.0'
 def okHttp3Version = '3.6.0'
@@ -145,7 +145,7 @@ dependencies {
     compile "com.android.support:support-annotations:${supportVersion}"
     compile "com.android.support:customtabs:${supportVersion}"
 
-    compile 'com.google.android.exoplayer:exoplayer:r2.2.0'
+    compile 'com.google.android.exoplayer:exoplayer:r2.3.0'
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
 
@@ -170,7 +170,7 @@ dependencies {
     compile "com.google.dagger:dagger:${daggerVersion}"
     kapt "com.google.dagger:dagger-compiler:${daggerVersion}"
 
-    compile "com.chibatching.kotpref:kotpref:2.0.0"
+    compile "com.chibatching.kotpref:kotpref:2.1.0"
 
     debugCompile "com.squareup.okhttp3:logging-interceptor:${okHttp3Version}"
 //    debugCompile "com.facebook.stetho:stetho:${stethoVersion}"

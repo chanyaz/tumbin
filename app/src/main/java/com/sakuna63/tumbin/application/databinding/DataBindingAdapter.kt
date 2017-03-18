@@ -20,7 +20,7 @@ import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.LoopingMediaSource
 import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.trackselection.AdaptiveVideoTrackSelection
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView
@@ -110,7 +110,7 @@ private fun SimpleExoPlayerView.buildVideoSource(videoUrl: String?, loop: Boolea
 
 private fun buildPlayer(context: Context): SimpleExoPlayer {
     val bandwidthMeter = DefaultBandwidthMeter()
-    val videoTrackSelectionFactory = AdaptiveVideoTrackSelection.Factory(bandwidthMeter)
+    val videoTrackSelectionFactory = AdaptiveTrackSelection.Factory(bandwidthMeter)
     val trackSelector = DefaultTrackSelector(videoTrackSelectionFactory)
     val loadControl = DefaultLoadControl()
 
